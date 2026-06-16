@@ -1,7 +1,11 @@
 # pkmn-tcg-ai
 Development of Pokemon TCG AI Challenge Agents
 
-- [Competition Info (kaggle)](https://www.kaggle.com/competitions/pokemon-tcg-ai-battle)
+
+## Resources
+- [Competition Simulation Info](https://www.kaggle.com/competitions/pokemon-tcg-ai-battle/overview)
+
+- [Competition Strategy Info](https://www.kaggle.com/competitions/pokemon-tcg-ai-battle-challenge-strategy)
 
 - [Official Competition Site](https://ptcg-abc.pokemon.co.jp/?lang=en)
 
@@ -10,3 +14,18 @@ Development of Pokemon TCG AI Challenge Agents
 - [PTCG Resources + Info](https://www.pokemon.com/uk/play-pokemon/about/tournaments-rules-and-resources)
 
 - [PTCG cabt API](https://matsuoinstitute.github.io/cabt/)
+
+## Details
+- Kaggle for resources and submission
+- Python
+
+## Submission Formats
+
+### Simulation 
+- .tar.gz bundle with 'main.py' at top level
+- include 'deck.csv'
+
+### Strategy
+- Kaggle writeup
+- Media Gallery
+
