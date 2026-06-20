@@ -39,4 +39,5 @@ Development of Pokemon TCG AI Challenge Agents
   ## Cards
   - [Card Search](test-cards.py)
   - [Decks](decks)
+  - [Card Data](resources\card-data)
 
