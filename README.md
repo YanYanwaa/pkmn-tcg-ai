@@ -29,3 +29,14 @@ Development of Pokemon TCG AI Challenge Agents
 - Kaggle writeup
 - Media Gallery
 
+# Included Files
+  ## SDK
+  - [API](sdk\api.py)
+  - [Battle Info](sdk\game.py)
+  - [Simulation Data](sdk\sim.py)
+  - [utils](sdk\utils.py)
+
+  ## Cards
+  - [Card Search](test-cards.py)
+  - [Decks](decks)
+
