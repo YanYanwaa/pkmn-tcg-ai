@@ -31,13 +31,13 @@ Development of Pokemon TCG AI Challenge Agents
 
 # Included Files
   ## SDK
-  - [API](sdk\api.py)
-  - [Battle Info](sdk\game.py)
-  - [Simulation Data](sdk\sim.py)
-  - [utils](sdk\utils.py)
+  - [API](sdk/api.py)
+  - [Battle Info](sdk/game.py)
+  - [Simulation Data](sdk/sim.py)
+  - [utils](sdk/utils.py)
 
   ## Cards
   - [Card Search](test-cards.py)
   - [Decks](decks)
-  - [Card Data](resources\card-data)
+  - [Card Data](resources/card-data)
 
