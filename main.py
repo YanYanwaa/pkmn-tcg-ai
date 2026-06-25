@@ -12,8 +12,12 @@ BASE_SCORES = {
     OptionType.END: -50
 }
 
-CARD_DATA = {c.cardID: c for c in all_card_data()}
-ATTACK_DATA = {a.attackID: a for a in all_attack()}
+CARD_DATA = {c.cardId: c for c in all_card_data()}
+ATTACK_DATA = {a.attackId: a for a in all_attack()}
+EVOLVES_INTO = {}
+for card in CARD_DATA.values():
+    if card.evolvesFrom:
+        EVOLVES_INTO[card.evolvesFrom] = card
 
 def read_deck_csv() -> list[int]:
     """Read deck.csv.
@@ -46,7 +50,7 @@ def score_option(option, obs: Observation):
     # ATTACK scores
     if option.type == OptionType.ATTACK:
 
-        attack = ATTACK_DATA.get(option.attackID) # Initialises available ATTACK options
+        attack = ATTACK_DATA.get(option.attackId) # Initialises available ATTACK options
 
         if not attack:
             return 50
@@ -70,10 +74,31 @@ def score_option(option, obs: Observation):
         return 60 # Base attack score
     
     if option.type == OptionType.EVOLVE:
-        return 150
+        if option.inPlayArea == AreaType.ACTIVE:
+            active_card = me.active[0] if me.active else None
+            my_card = CARD_DATA.get(active_card.id) 
+            my_evolved_card = EVOLVES_INTO.get(my_card.name)
+            # opp_card = CARD_DATA.get(opp_active.id)
+
+            energy_count = len(active_card.energies)
+            evo_attacks = [ATTACK_DATA[atk_id] for atk_id in my_evolved_card.attacks if atk_id in ATTACK_DATA]
+            if not evo_attacks:
+                return 90
+            cheapest_atk_cost = min(len(a.energies) for a in evo_attacks)
+            energy_needed = max(0, cheapest_atk_cost - energy_count)
+
+            if energy_needed >= 2:
+                return 20
+            else:
+                return 100
+            
+        else:
+            return 70
+
+    return BASE_SCORES.get(option.type, 0)
 
 
-def agent1(obs_dict):
+def score_agent(obs_dict):
 
     obs: Observation = to_observation_class(obs_dict)
 
@@ -84,7 +109,7 @@ def agent1(obs_dict):
     max_count = obs.select.maxCount
 
     scored_options = [
-        (score_option(opt), i)
+        (score_option(opt,obs), i)
         for i, opt in enumerate(options)
     ]
 
@@ -94,7 +119,7 @@ def agent1(obs_dict):
 
     return chosen
 
-def agent2(obs_dict):
+def random_agent(obs_dict):
 
     obs: Observation = to_observation_class(obs_dict)
 

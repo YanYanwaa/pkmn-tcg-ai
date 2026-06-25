@@ -1,12 +1,12 @@
 from kaggle_environments import make
-from main import agent1,agent2
+from main import score_agent,random_agent
 
 
 with open("decks/deck1.csv") as f:
     deck = [int(line) for line in f.readlines() if line.strip()]
 
 env = make("cabt", configuration={"decks": [deck, deck]})
-env.run([agent1, agent2])
+env.run([score_agent, random_agent])
 
 for i, state in enumerate(env.state):
     print(f"Agent {i}: reward={state['reward']}, status={state['status']}")
