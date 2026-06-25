@@ -75,24 +75,42 @@ def score_option(option, obs: Observation):
     
     if option.type == OptionType.EVOLVE:
         if option.inPlayArea == AreaType.ACTIVE:
-            active_card = me.active[0] if me.active else None
-            my_card = CARD_DATA.get(active_card.id) 
-            my_evolved_card = EVOLVES_INTO.get(my_card.name)
-            # opp_card = CARD_DATA.get(opp_active.id)
 
-            energy_count = len(active_card.energies)
+            me_active = me.active[0] if me.active else None
+            my_card = CARD_DATA.get(me_active.id) 
+            my_evolved_card = EVOLVES_INTO.get(my_card.name)
+            opp_active = opp.active[0] if opp.active else None
+            opp_card = CARD_DATA.get(opp_active.id)
+
+            # If evolving means cant attack, dont evolve
+            energy_count = len(me_active.energies)
             evo_attacks = [ATTACK_DATA[atk_id] for atk_id in my_evolved_card.attacks if atk_id in ATTACK_DATA]
             if not evo_attacks:
-                return 90
+                return 80
             cheapest_atk_cost = min(len(a.energies) for a in evo_attacks)
             energy_needed = max(0, cheapest_atk_cost - energy_count)
 
             if energy_needed >= 2:
                 return 20
-            else:
+            
+            opp_active_hp = opp_active.hp
+            highest_atk_dmg = max(a.damage for a in evo_attacks)
+            if opp_active_hp <= highest_atk_dmg:
                 return 100
             
-        else:
+            opp_active_attacks = [ATTACK_DATA[atk_id] for atk_id in opp_card.attacks if atk_id in ATTACK_DATA]
+            opp_highest_atk_dmg = max(a.damage for a in opp_active_attacks)
+            my_active_hp = me_active.maxHp - me_active.hp
+            my_evolved_hp = my_evolved_card.hp
+            hp_after_evo = my_evolved_hp - my_active_hp
+            if hp_after_evo <= opp_highest_atk_dmg:
+                return 20
+            
+            else:
+                return 70
+
+
+        else: # Evolve benched pokemon anyway
             return 70
 
     return BASE_SCORES.get(option.type, 0)
