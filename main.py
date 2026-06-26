@@ -46,15 +46,10 @@ def score_option(option, obs: Observation):
     me_active = me.active[0] if me.active else None
     opp_active = opp.active[0] if opp.active else None
 
-    if me.active:
-        me_card = CARD_DATA.get(me_active.id)
-    else:
-        None
+    me_card = CARD_DATA.get(me_active.id) if me_active else None 
 
-    if opp.active:
-        opp_card = CARD_DATA.get(opp_active.id)
-    else:
-        None
+    opp_card = CARD_DATA.get(opp_active.id) if opp_active else None
+  
     
 
     # ENDing turn worst option
