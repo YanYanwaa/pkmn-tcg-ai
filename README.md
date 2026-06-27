@@ -21,6 +21,8 @@ Development of Pokemon TCG AI Challenge Agents
 
 - [PTCG Resources + Info](https://www.pokemon.com/uk/play-pokemon/about/tournaments-rules-and-resources)
 
+- [Meta Deck Info + Matchups](https://play.limitlesstcg.com/decks)
+
 - [PTCG cabt API](https://matsuoinstitute.github.io/cabt/)
 
 # Details
