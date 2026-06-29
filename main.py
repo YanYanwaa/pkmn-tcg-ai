@@ -9,7 +9,8 @@ BASE_SCORES = {
     OptionType.EVOLVE:90,
     OptionType.ATTACH:100,
     OptionType.PLAY: 110,
-    OptionType.END: -50
+    OptionType.END: -50,
+    OptionType.RETREAT: -60
 }
 
 CARD_DATA = {c.cardId: c for c in all_card_data()}
@@ -25,7 +26,7 @@ def read_deck_csv() -> list[int]:
     Returns:
         list[int]: A list of card IDs in the deck.
     """
-    file_path = "decks/deck1.csv"
+    file_path = "decks/draganoir.csv"
     if not os.path.exists(file_path):
         file_path = "/kaggle_simulations/agent/" + file_path
     with open(file_path, "r") as file:
@@ -56,6 +57,9 @@ def score_option(option, obs: Observation):
     if option.type == OptionType.END:
         return -100
     
+    # NO RETREAT
+    if option.type == OptionType.RETREAT:
+        return -110
     # ATTACK scores
     if option.type == OptionType.ATTACK:
 
