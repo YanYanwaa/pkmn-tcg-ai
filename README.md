@@ -33,8 +33,15 @@ Development of Pokemon TCG AI Challenge Agents
 
 ### Simulation 
 - .tar.gz bundle with 'main.py' at top level
-- include 'deck.csv'
+- include 'deck.csv' at top level
 
+Include all necessary files with:
+`tar -czvf submission.tar.gz main.py deck.csv sdk/*`
+after moving and renaming used deck to top level as `deck.csv`
+
+Ensure deck is called in main.py from top level rather than inside decks/
+
+Agent to be used as bottom def in main.py
 ### Strategy
 - Kaggle writeup
 - Media Gallery
