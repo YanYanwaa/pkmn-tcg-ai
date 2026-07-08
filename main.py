@@ -4,7 +4,7 @@ from collections import defaultdict
 
 from sdk.api import AreaType, CardType, Log, LogType, Observation, SelectContext, OptionType, Card, Pokemon, State, all_card_data, to_observation_class
 
-file_path = "decks/hydrapple.csv"
+file_path = "deck.csv"
 if not os.path.exists(file_path):
     file_path = "/kaggle_simulations/agent/" + file_path
 with open(file_path, "r") as file:
@@ -349,7 +349,9 @@ def agent(obs_dict: dict) -> list[int]:
     evolve_chikorita_count = 0
     can_evolve_dipplin = False
     can_evolve_bayleef = False
+    hydrapple_ability = False
     damage = 60 # TODO change damage based on number of energies (eg if ogerpon in play add my active and op active energies, if hydrapple add all my active, if meganium in play double all my counts)
+
 
     for card in my_state.active:
         if card == None:
@@ -382,7 +384,7 @@ def agent(obs_dict: dict) -> list[int]:
                 can_evolve_bayleef = True
         if card.id == Hydrapple_Ex and len(card.energies) >= 2:
             bench_attacker = True
-        elif card.id == Ogerpon and len(card.energies) >= 2:
+        elif card.id == Ogerpon and len(card.energies) >= 3:
             bench_attacker = True
         elif card.id == Meganium and len(card.energies) >= 2:
             bench_attacker = True
@@ -397,9 +399,11 @@ def agent(obs_dict: dict) -> list[int]:
         discard_counts[card.id] += 1
 
     def attach_score(attach_id: int, pokemon: Pokemon, active: bool) -> int:
+        if attach_id == 0:
+            return -1
         energy_count = len(pokemon.energies)
-        if field_counts[Meganium]:
-            energy_count * 2
+        if field_counts[Meganium] >= 1:
+            energy_count *= 2
         if card_table[attach_id].cardType == CardType.TOOL:
             score = 60000
             if active:
@@ -414,19 +418,25 @@ def agent(obs_dict: dict) -> list[int]:
                     return 18000
             else:
                 return -1
-        if active and can_main_attack:
+        if active and can_main_attack and pokemon.id != Ogerpon:
             return -1
         score = 20000
+
+        if active and pokemon.id == Hydrapple_Ex and energy_count < 2:
+            return 50000
+        
         if energy_count >= 2:
             if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
                 score += 200
+            elif pokemon.id == Ogerpon:
+                score += 500
             else:
                 return -1
         elif energy_count == 1:
             if pokemon.id == Hydrapple_Ex:
-                score += 300
+                score += 400
             elif pokemon.id == Ogerpon:
-                score += 250
+                score += 350
             elif pokemon.id == Applin:
                 score -= 150
             else:
@@ -443,12 +453,32 @@ def agent(obs_dict: dict) -> list[int]:
                 elif pokemon.id == Applin:
                     score += 100
                 elif pokemon.id == Ogerpon:
-                    score += 150
+                    score += 250
                 else:
                     score += 50
-                if bench_attacker:
+                if bench_attacker and pokemon.id != Ogerpon:
                     score -= 200
+        
+        
         return score
+    
+
+    def hydrapple_attach_score(pokemon: Pokemon) -> int:
+        if pokemon is None:
+            return -1
+        
+        if pokemon.id == Ogerpon:
+            energy_score = len(pokemon.energies) * 10000
+            hp_score = 1000 - pokemon.hp
+
+            return 50000 + energy_score + hp_score
+        elif pokemon.id == Hydrapple_Ex:
+            if pokemon.energies < 2:
+                return 50000
+            else:
+                return 30000 + len(pokemon.energies) * 5000
+        else:
+            return 0
     
     def hand_score(id: int, ignore_count: bool, _in_progress: frozenset = frozenset()):
         if id in _in_progress:
@@ -547,7 +577,7 @@ def agent(obs_dict: dict) -> list[int]:
             weak_bench = False
             if bench_attacker and not can_attack:
                 score = 60000
-            elif op_state.active[0] is not None and len(op_state.active[0].energies) >= 2:
+            elif (len(op_state.active) > 0 and op_state.active[0] is not None and len(op_state.active[0].energies) >= 2):
                 for pokemon in op_state.bench:
                     if (len(pokemon.energies) <= 1
                         or (pokemon_score(pokemon, True) > pokemon_score(op_state.active[0], True) and pokemon.hp < damage)):
@@ -557,7 +587,13 @@ def agent(obs_dict: dict) -> list[int]:
             else:
                 score = 100
         elif id == Briar:
-            if op_state.prize == 2 and active_id == Ogerpon and prize_count(op_state.active[0], True) < 2:
+            if (
+                len(op_state.prize) == 2
+                and active_id == Ogerpon
+                and len(op_state.active) > 0
+                and op_state.active[0] is not None
+                and prize_count(op_state.active[0], True) < 2
+            ):
                 score = 50000
             else:
                 score = 60
@@ -627,7 +663,7 @@ def agent(obs_dict: dict) -> list[int]:
                         score = 52000
                 elif hand_counts[Dipplin] >= 1 and field_counts[Dipplin] == 0:
                     score = 18000
-            elif field_counts[Applin] >= 1 and field_counts[Applin] == 0:
+            elif hand_counts[Applin] >= 1 and field_counts[Applin] == 0:
                 score = 20000
             elif field_counts[Chikorita] == 0 and hand_counts[Chikorita] == 0: # If no Chikorita
                 if field_counts[Bayleef] == 0 and hand_counts[Bayleef] == 0: # If no Bayleef AND no Chikorita
@@ -698,6 +734,7 @@ def agent(obs_dict: dict) -> list[int]:
     no_draw = (my_state.deckCount <= 8)
     do_switch = (not can_main_attack and (bench_attacker or (active_id != Celebi and field_counts[Celebi] >= 1 and state.turn >= 2)))
     effect_card_id = 0 if select.effect == None else select.effect.id
+    hydrapple_ability = (effect_card_id == Hydrapple_Ex)
     context_card_id = 0 if select.contextCard == None else select.contextCard.id
 
     scores = []
@@ -740,7 +777,7 @@ def agent(obs_dict: dict) -> list[int]:
                             elif energy_count == 1:
                                 score += 29500
                             else:
-                                score -= 10000
+                                score -= 100
                         elif card.id == Meowth_Ex:
                             score -= 2000
                         elif card.id == Fezandipiti_Ex:
@@ -804,11 +841,30 @@ def agent(obs_dict: dict) -> list[int]:
                             if no_damage_counter(card):
                                 score = -1
                 elif context == SelectContext.ATTACH_FROM:
-                    score = attach_score(context_card_id, card, o.area == AreaType.ACTIVE)
-                    if card.id == Hydrapple_Ex:
+                    if select.contextCard is None:
+                        score = -1
+                    else:
+                        score = attach_score(select.contextCard.id, card, o.area == AreaType.ACTIVE)
+
+                    if card.id == Hydrapple_Ex and len(card.energies) < 2:
                         score += 300
                     elif card.id == Ogerpon:
-                        scoer += 200
+                        score += 350
+                elif context == SelectContext.ATTACH_TO:
+                    if select.contextCard is None:
+                        score = -1
+                    else:
+                        pokemon = get_card(obs, o.area, o.index, my_index)
+                        if hydrapple_ability:
+                            score = hydrapple_attach_score(pokemon)
+                        else:
+                            if card.id == Basic_Grass_Energy:
+                                score += 500
+
+
+                    
+                    
+                    
         elif o.type == OptionType.ENERGY_CARD or o.type == OptionType.ENERGY:
             if o.playerIndex != state.yourIndex:
                 if o.area == AreaType.BENCH:
@@ -892,7 +948,7 @@ def agent(obs_dict: dict) -> list[int]:
                 else:
                     score = -1
             elif card.id == Forest_of_Vitality:
-                if stadium_id > 0 or state.turn == 1:
+                if stadium_id != Forest_of_Vitality or state.turn == 1:
                     score = 80000
                 else: score = -1
             elif card.id == Briar:
@@ -927,6 +983,7 @@ def agent(obs_dict: dict) -> list[int]:
             card = get_card(obs, o.area, o.index, my_index)
             pokemon = get_card(obs, o.inPlayArea, o.inPlayIndex, my_index)
             score = attach_score(card.id, pokemon, o.inPlayArea == AreaType.ACTIVE)
+            score += 100000
         elif o.type == OptionType.EVOLVE:
             pokemon = get_card(obs, o.inPlayArea, o.inPlayIndex, my_index)
             score += len(pokemon.energies)
@@ -937,16 +994,35 @@ def agent(obs_dict: dict) -> list[int]:
             else:
                 score += 70000
         elif o.type == OptionType.ABILITY:
+            is_active = (o.area == AreaType.ACTIVE)
             card = get_card(obs, o.area, o.index, my_index)
             if no_draw:
                 score = -1
             elif card.id == 1267:
                 score = 1
             elif card.id == Ogerpon:
-                if hand_counts[Basic_Grass_Energy] <= 1 and not can_main_attack:
-                    score = -1
+                if is_active:
+                    # Always use Teal Dance while the active Ogerpon can still benefit.
+                    if hand_counts[Basic_Grass_Energy] >= 1:
+                        score = 90000
+                    else:
+                        score = -1
+                else:
+                    # Benched Ogerpon follows the normal conservation rules.
+                    if hand_counts[Basic_Grass_Energy] <= 1 and not can_main_attack:
+                        score = -1
+                    else:
+                        score = 40000
+        
+            elif card.id == Hydrapple_Ex:
+                    hydrapple_ability = True
+                    score = 80000
             else:
                 score = 40000
+        elif o.type == OptionType.RETREAT:
+            if do_switch:
+                score = 10000
+            else: score = -1
         elif o.type == OptionType.ATTACK:
             score = o.attackId
 
@@ -961,14 +1037,16 @@ def agent(obs_dict: dict) -> list[int]:
     
     return output
 
+# TODO function to calculate highest damage (add op + own energy for ogerpon, add all my energy for hydrapple, default 220 for tapu bulu), update retreat in comparison with damage + prize cards + energy
 
+# TODO noticed issues -> applin +2G active, ogerpon+2G bench, Meganium+0G bench -> attach energy to meganium + attack with applin, should switch applin with ogerpon + attach energy and attack with ogerpon
+
+# TODO account for crustle/sylv & account for fire decks(all weak to fire)
                 
+# TODO dont appear to be using ogerpon ability to attach energy
 
+# TODO when hydrapple is active with 2 energy and ogerpons are on bench with no energy, attaches energy to hydrapple rather than ogerpon                        
 
-                
-
-                             
-                                
-                
+# TODO celebi attack handling to search for necessary useful pokemon
 
 
