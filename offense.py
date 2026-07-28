@@ -143,35 +143,88 @@ def offence_agent(obs_dict: dict) -> list[int]:
     my_active = my_state.active[0] if len(my_state.active) > 0 else None
     op_active = op_state.active[0] if len(op_state.active) > 0 else None
 
-    if active_id == Hydrapple_Ex and can_main_attack:
-        energy_count = 0
-        if my_active is not None:
-            energy_count += sum(1 for e in my_active.energies if e == EnergyType.GRASS)
-        for pokemon in my_state.bench:
-            energy_count += sum(1 for e in pokemon.energies if e == EnergyType.GRASS)
-        damage = 30 + (30 * energy_count)
-    elif active_id == Ogerpon and can_main_attack:
-        energy_count = 0
-        if my_active is not None:
-            energy_count += len(my_active.energies)
-        if op_active is not None:
-            energy_count += len(op_active.energies)
-        damage = 30 + (30 * energy_count)
-    elif active_id == Tapu_Bulu:
-        damage = 200
-    elif active_id == Dipplin:
-        for pokemon in my_state.bench:
-            benched += 1
-        damage = 2 * (20 * benched)
-    elif active_id == Meganium:
-        damage = 140
-    elif active_id == Applin:
-        damage = 20
-    elif active_id == Chikorita:
-        damage = 30 
-    else:
+    def damage_calc(active_id: int, my_active: Pokemon, op_active: Pokemon) -> int:
         damage = 60
-    
+        if active_id == Hydrapple_Ex and can_main_attack:
+            energy_count = 0
+            if my_active is not None:
+                energy_count += sum(1 for e in my_active.energies if e == EnergyType.GRASS)
+            for pokemon in my_state.bench:
+                energy_count += sum(1 for e in pokemon.energies if e == EnergyType.GRASS)
+            damage = 30 + (30 * energy_count)
+        elif active_id == Ogerpon and can_main_attack:
+            energy_count = 0
+            if my_active is not None:
+                energy_count += len(my_active.energies)
+            if op_active is not None:
+                energy_count += len(op_active.energies)
+            damage = 30 + (30 * energy_count)
+        elif active_id == Tapu_Bulu:
+            damage = 200
+        elif active_id == Dipplin:
+            benched = len(my_state.bench)
+            damage = 2 * (20 * benched)
+        elif active_id == Meganium:
+            damage = 140
+        elif active_id == Applin:
+            damage = 20
+        elif active_id == Chikorita:
+            damage = 30 
+        else:
+            damage = 60
+        return damage
+
+    def can_attack_now(pokemon: Pokemon) -> bool:
+
+        energy_count = len(pokemon.energies)
+
+        if field_counts[Meganium] >= 1:
+            energy_count *= 2
+
+        if pokemon.id == Ogerpon:
+            return energy_count >= 3
+        elif pokemon.id == Tapu_Bulu:
+            return energy_count >= 4
+        elif pokemon.id == Chikorita:
+            return energy_count >= 1
+        elif pokemon.id == Bayleef:
+            return energy_count >= 2
+        elif pokemon.id == Meganium:
+            return energy_count >= 4
+        elif pokemon.id == Applin:
+            return energy_count >= 1
+        elif pokemon.id == Dipplin:
+            return energy_count >= 2
+        elif pokemon.id == Hydrapple_Ex:
+            return energy_count >= 2
+        elif pokemon.id == Meowth_Ex:
+            return energy_count >= 3
+        elif pokemon.id == Fezandipiti_Ex:
+            return energy_count >= 3
+        elif pokemon.id == Celebi:
+            return energy_count >= 1    
+
+        return False
+
+    def better_bench_attacker(active_id: int, my_active: Pokemon, op_active: Pokemon) -> int:
+        if my_active is not None:
+            return False
+        if can_attack_now(my_active):
+            active_damage = damage_calc(active_id, my_active, op_active)
+            if my_active.id == Ogerpon or my_active.id == Hydrapple_Ex:
+                active_damage += 30
+        else:
+            active_damage = 0
+
+        for pokemon in my_state.bench:
+            if can_attack_now(pokemon):
+                bench_damage = damage_calc(pokemon.id, pokemon, op_active)
+                if pokemon.id == Ogerpon or pokemon.id == Hydrapple_Ex:
+                    bench_damage += 30
+                if bench_damage > active_damage:
+                    return True
+
+
     for card in my_state.active:
         if card == None:
             continue
@@ -217,5 +270,132 @@ def offence_agent(obs_dict: dict) -> list[int]:
     for card in my_state.discard:
         discard_counts[card.id] += 1
 
-    def
+    def attach_score(attach_id: int, pokemon: Pokemon, active: bool) -> int:
+        score = 4000
+        if attach_id == 0:
+            return -1
+        energy_count = len(pokemon.energies)
+        if field_counts[Meganium] >= 1:
+            energy_count *= 2
+
+        if pokemon.id == Meowth_Ex:
+            if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
+                if better_bench_attacker(active_id, my_active, op_active):
+                    score += 100
+            elif active and can_switch and energy_count == 2 and not my_state.asleep and not my_state.paralyzed:
+                score += 400
+            elif not active:
+                score += 60 
+        elif pokemon.id == Fezandipiti_Ex:
+            if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
+                if better_bench_attacker(active_id, my_active, op_active):
+                    score += 100
+            elif not active:
+                score += 40
+        elif pokemon.id == Celebi:
+            if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
+                if better_bench_attacker(active_id, my_active, op_active):
+                    score += 100
+        elif pokemon.id == Hydrapple_Ex:
+            if active and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    score += 500
+                elif not better_bench_attacker(active_id, my_active, op_active):
+                    score += 350
+            elif not active:
+                if not can_attack_now(pokemon):
+                    score += 200
+            else:
+                score += 90
+        elif pokemon.id == Ogerpon:
+            if active and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    score += 550
+                elif not can_switch and better_bench_attacker(active_id, my_active, op_active):
+                    score += 400
+            elif not active:
+                if not can_attack_now(pokemon):
+                    score += 250
+                else:
+                    for n in energy_count:
+                        score += 10
+            else:
+                score += 100
+        elif pokemon.id == Tapu_Bulu:
+            if active and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    score += 100 
+                elif not better_bench_attacker(active_id, my_active, op_active):
+                    score += 300
+            elif not active:
+                if not can_attack_now(pokemon):
+                    score += 100
+            else:
+                score += 70
+        elif pokemon.id == Dipplin:
+            if active and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    for n in my_state.bench:
+                        score += 10 
+                    if not better_bench_attacker(active_id, my_active, op_active):
+                        score += 150
+                elif energy_count == 1:
+                    score += 150
+            elif not active:
+                if energy_count == 1:
+                    field_hydra = field_counts[Hydrapple_Ex]
+                    discard_hydra = discard_counts[Hydrapple_Ex]
+                    if field_hydra + discard_hydra <= 1:
+                        score += 200
+                elif energy_count == 0:
+                    score += 150
+            else:
+                score += 80
+        elif pokemon.id == Applin:
+            if active and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    for n in my_state.bench:
+                        score += 5
+                    if not better_bench_attacker(active_id, my_active, op_active):
+                        score += 120
+                elif energy_count == 1:
+                        score += 120
+            elif not active:
+                if energy_count == 1:
+                    field_hydra = field_counts[Dipplin]
+                    discard_hydra = discard_counts[Dipplin]
+                    if field_hydra + discard_hydra <= 1:
+                        score += 170
+                    elif energy_count == 0:
+                        score += 120
+            else:
+                score += 20
+        elif pokemon.id == Chikorita:
+            if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    score += 100
+                elif not better_bench_attacker(active_id, my_active, op_active):
+                    score += 20
+            else: 
+                score += 10
+        elif pokemon.id == Bayleef:
+            if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    score += 200
+                elif not better_bench_attacker(active_id, my_active, op_active):
+                    score += 50
+            else:
+                score += 20
+        elif pokemon.id == Meganium:
+            if active and not can_switch and not my_state.asleep and not my_state.paralyzed:
+                if not can_attack_now(pokemon):
+                    score += 400
+                elif field_counts[Meganium] == 1:
+                    score += 600
+            else:score += 50
+        
+        return score
+    
+
+    ## ADD "DEF CAN_ATTACK()" TO CHECK IF BETTER BENCHED ATTACKER CAN ATTACK - MAYBE UPDATE CAN ATTACK OR CAN MAIN ATTACK HERE
     

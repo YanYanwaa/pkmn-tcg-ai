@@ -1,0 +1,46 @@
+Card Priorities
+
+Play Basic Pokemon
+Evolve Pokemon
+Hydrapple Ability
+Attach Energy
+Other Abilities
+Play Item
+Play Supporter
+Attack
+
+8 Stages (Hydrapple and Attach energy can be same level so 7)
+
+1000 Per level
+Increments of 50 based on card value at current moment
+
+7000 Play Basic
+6000 Evolve
+5000 Retreat
+4900 Hydrapple Ability
+4000 Attach Energy
+3000 Abilities
+2000 Item
+1000 Supporter
+0000 Attack
+
+ENERGY ORDER IF 0 ENERGY AND ALL AVAILABLE
+4100 Hydrapple
+4090 Ogerpon
+4080 Dipplin
+4070 Tapu Bulu
+4060 Meowth
+4050 Meganium
+4040 Fezandipiti
+4030 Bayleef #Need to add both cases
+4020 Applin
+4010 Chikorita
+4000 Celebi
+
+MEOWTH 
+If better bench attacker, need to switch
+    If 2 eneregy, attach energy and attack
+    if <= 1 energy, attach energy and switch 
+If no better attacker on bench and cant attack, attach energy until can attack
+if no better attacker on bench and can attack, attach energy to other pokemon or save energy
+
