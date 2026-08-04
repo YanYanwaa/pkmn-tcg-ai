@@ -395,7 +395,212 @@ def offence_agent(obs_dict: dict) -> list[int]:
             else:score += 50
         
         return score
+
+    def hydrapple_attach_score(pokemon:Pokemon) -> int:
+        score = 4900
+
+        if pokemon.id == Ogerpon:
+            energy_score = (len(pokemon.energies) * 10) + 11
+        
+        elif pokemon.id == Hydrapple_Ex:
+            if pokemon.energies == 0:
+                energy_score = 40
+            elif pokemon.energies == 1:
+                energy_score = 50
+            else:
+                energy_score = 0
+        else:
+            if not can_attack_now(pokemon):
+                energy_score = 10
+
+        hp_score = 500 - pokemon.hp
+        
+        return score + hp_score + energy_score
+
+    def hand_score(id: int, ignore_count: bool, _in_progress: frozenset = frozenset()):
+            if id in _in_progress:
+                return 0  
+            _in_progress = _in_progress | {id}
+    
+
+            # TODO move this to the play basic section rather than hand score
+            if my_state.bench.count == 4 and field_counts[Meganium] == 0 and discard_counts[Meganium] < 2:
+                return -1
+
+            if id == Applin:
+                score = 7000
+                if discard_counts[Hydrapple_Ex] == 2 and discard_counts[Dipplin] == 2:
+                    if hand_counts[Night_Stretcher] >= 1:
+                        score += 50
+                    else:
+                        score = -1
+                elif discard_counts[Hydrapple_Ex] == 2 and discard_counts[Dipplin] < 2:
+                    score += 200
+                elif discard_counts[Hydrapple_Ex] < 2 and discard_counts[Dipplin] == 2:
+                    if discard_counts[Rare_Candy] == 0:
+                        score += 120
+                    else:
+                        score = -1
+                elif discard_counts[Hydrapple_Ex] < 2 and discard_counts[Dipplin] < 2:
+                    score += 350
+                if stadium_id == Forest_of_Vitality and hand_counts[Dipplin] >= 1 and hand_counts[Hydrapple_Ex] >= 1:
+                    score += 100
+            elif id == Dipplin:
+                score = 7000
+                if can_evolve_applin:
+                    score += 300
+                if discard_counts[Hydrapple_Ex] == 2:
+                    score -= 80
+                    if hand_counts[Night_Stretcher] >= 1:
+                        score += 180
+                elif hand_counts[Hydrapple_Ex] >= 1:
+                    score += 200
+                    if stadium_id == Forest_of_Vitality:
+                        score += 100
+            elif id == Hydrapple_Ex:
+                score = 7000
+                if can_evolve_dipplin:
+                    score += 400
+                elif can_evolve_applin and hand_counts[Rare_Candy] >= 1 and not no_item:
+                    score += 350
+                if field_counts[id] == 0:
+                    score += 200
+                else:
+                    score += 100 
+                if len(op_state.prize) == 2:
+                    score -= 250
+            elif id == Chikorita:
+                score = 7000
+                if field_counts[Meganium] < 1:
+                    score += 300
+                if discard_counts[Meganium] == 2 and discard_counts[Bayleef] == 2:
+                    if hand_counts[Night_Stretcher] >= 1:
+                        score += 100
+                    else:
+                        score = -1
+                elif discard_counts[Meganium] < 2 and discard_counts[Bayleef] == 2:
+                    if discard_counts[Rare_Candy] == 0:
+                        score += 250
+                elif discard_counts[Meganium] < 2 and discard_counts[Bayleef] < 2:
+                    score += 200
+                if stadium_id == Forest_of_Vitality and hand_counts[Bayleef] >= 1 and hand_counts[Meganium] >= 1:
+                    score += 150
+            elif id == Bayleef:
+                score = 7000
+                if can_evolve_chikorita:
+                    score += 350
+                if discard_counts[Meganium] == 2:
+                    score -= 120
+                    if hand_counts[Night_Stretcher] >= 1:
+                        score += 250
+                elif hand_counts[Meganium] >= 1:
+                    score += 250
+                    if stadium_id == Forest_of_Vitality:
+                        score += 100
+            elif id == Meganium:
+                score = 7000
+                if can_evolve_bayleef:
+                    score += 450
+                elif can_evolve_chikorita and hand_counts[Rare_Candy] >= 1 and not no_item:
+                    score += 400
+                if field_counts[id] == 0:
+                    score += 250
+                else:
+                    score += 150
+            elif id == Ogerpon:
+                score = 7000
+                if field_counts[id] == 0:
+                    score += 400
+                elif field_counts[id] >= 1:
+                    if field_counts[Hydrapple_Ex] < 1:
+                        return -1
+                    else:
+                        if field_counts[id] == 1:
+                            score += 400
+                        if field_counts[Meganium] >= 1:
+                            score += 100
+                        else:
+                            score -= 110
+                    if len(op_state.prize) == 2:
+                        score -= 250
+            elif id == Tapu_Bulu:
+                score = 7000
+                if field_counts[Meganium] >= 1:
+                    score += 250
+                if field_counts[Hydrapple_Ex] >= 1:
+                    score += 100
+                if len(op_state.prize) == 2:
+                    score += 100
+            elif id == Celebi:
+                score = -1
+            elif id == Meowth_Ex:
+                score = 7000
+                if field_counts[Hydrapple_Ex] < 1 and field_counts[Ogerpon] < 1 and field_counts[Dipplin] < 1:
+                    if field_counts[Tapu_Bulu] < 1 and field_counts[Meganium] < 1:
+                        score += 400
+                    else:
+                        score += 250
+                else:
+                    score = -1
+            elif id == Fezandipiti_Ex:
+                score = 7000
+                if field_counts[Hydrapple_Ex] < 1 and field_counts[Ogerpon] < 1 and field_counts[Dipplin] < 1:
+                    if field_counts[Tapu_Bulu] < 1 and field_counts[Meganium] < 1:
+                        score += 300
+                    else:
+                        score += 150
+                else:
+                    score = -1
+            elif id == Rare_Candy:
+                score = 6000
+                if can_evolve_chikorita and hand_counts[Meganium] >= 1:
+                    score += 200
+                    if field_counts[Meganium] < 1:
+                        score += 300
+                if can_evolve_applin and hand_counts[Hydrapple_Ex] >= 1:
+                    score += 300
+            elif id == Night_Stretcher:
+                score = 6000
+                if field_counts[Meganium] < 1:
+                    if discard_counts[Meganium] >= 1:
+                        score += 200
+                    if field_counts[Bayleef] >= 1:
+                        score += 200
+                    if hand_counts[Rare_Candy] and can_evolve_chikorita and not no_item:
+                        score += 50
+                elif field_counts[Hydrapple_Ex] < 1:
+                    if discard_counts[Hydrapple_Ex] >= 1:
+                        score += 150
+                    if field_counts[Dipplin] >= 1:
+                        score += 150
+                    if hand_counts[Rare_Candy] and can_evolve_applin and not no_item:
+                        score += 20
+                elif hand_counts[Basic_Grass_Energy] == 0:
+                    if field_counts is not None:
+                        for p in field_counts:
+                            if field_counts[p] >= 1:
+                                card_id = card_table[p].cardId
+                                if card_id == Hydrapple_Ex or card_id == Ogerpon:
+                                    score += 50
+            elif id == Boss_Orders:
+                score = 2000
+                if my_active is not None and op_active is not None and op_state.bench is not None:
+                    if can_attack_now:
+                        if damage_calc(my_active.id,my_active,op_active) >= op_active.hp:
+                            active_prize = prize_count(op_active, True)
+                        for p in op_state.bench:
+                            if op_state.bench[p] >= 1:
+                                card
+
+#TODO add can kill bench function comparing scores + energy (include ogerpon if given an extra energy) for bosses orders switch and before energy attachment
+
+                         
+                            
+                
+
+                
+
+            return score
     
 
     ## ADD "DEF CAN_ATTACK()" TO CHECK IF BETTER BENCHED ATTACKER CAN ATTACK - MAYBE UPDATE CAN ATTACK OR CAN MAIN ATTACK HERE
-    

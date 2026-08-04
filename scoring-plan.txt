@@ -14,6 +14,7 @@ Attack
 1000 Per level
 Increments of 50 based on card value at current moment
 
+
 7000 Play Basic
 6000 Evolve
 5000 Retreat
@@ -44,3 +45,18 @@ If better bench attacker, need to switch
 If no better attacker on bench and cant attack, attach energy until can attack
 if no better attacker on bench and can attack, attach energy to other pokemon or save energy
 
+Play Pokemon Order
+If ever bench == 4 and NO meganium on board OR chikorita/bayleef on board and < 2 meganiums in discard, DO NOT PLAY
+If useless active (meowth/celebi/Fezandipiti)
+    Meganium > Hydrapple > Ogerpon > Tapu Bulu > Meowth > Fezandipiti > Celebi 
+    If Applin + Dipplin + Hydrapple in bench/hand Prioritise getting Hydrapple
+    If NO hydrapple on board
+        If < 2 Hydrapple in discard, play Applin
+    If any missing, priortise ogerpon
+        If no Ogerpon on board
+                If >= 1 Ogerpon on board with NO Hydrapple, dont play
+                If 1 Ogerpon on board with Hydrapple, play ogerpon
+                If Board has Hydrapple, and meganium, play ogerpons as much as you want
+    
+    
+    
