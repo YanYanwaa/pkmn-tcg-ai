@@ -59,4 +59,32 @@ If useless active (meowth/celebi/Fezandipiti)
                 If Board has Hydrapple, and meganium, play ogerpons as much as you want
     
     
-    
+Dawn
+Prio Meganium setup
+Then Hydrapple Setup 
+Ogerpon
+2nd Hydrapple
+Tapu Bulu
+Backup Meganium
+
+Play to Active
+If can kill switch HighHP > HighDamage > LowScore > MostEnergy
+If cant kill switch MostEnergy > HighHP > LowScore
+Hydrapple
+Ogerpon
+Tapu Bulu
+Dipplin
+Meowth
+Fezandipiti
+Applin
+Bayleef
+Chikorita
+Celebi
+
+
+FOR DEFENCE
+Evolve - if cant kill dont evolve into ex unless health > 130
+switch - switch ex pokemon out unless can kill - switch in high hp low retreat cost non ex pokemon, that are able to retreat
+attach - attach energy to ex pokemon on bench until it is able to kill, once able to kill attach energy to next best, ensure each pokemon can retreat
+items - play boss' orders if opponent is ex and has more energy than op bench pokemon
+play - use abilities to ensure each pokemon has enough energy to retreat and heal lowest hp

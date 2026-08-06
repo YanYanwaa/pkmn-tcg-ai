@@ -1,6 +1,8 @@
 import json
 import random
 from main import agent
+from offense import offence_agent
+from defence import defence_agent
 from sdk.game import battle_start, battle_finish, battle_select, visualize_data
 
 with open("decks/hydrapple.csv") as f:
@@ -13,7 +15,7 @@ while True:
         break
 
     index = obs_dict["current"]["yourIndex"]
-    agent_index = agent if index == 0 else agent
+    agent_index = defence_agent if index == 0 else offence_agent
 
     action = agent_index(obs_dict)
     obs_dict.pop("search_begin_input")

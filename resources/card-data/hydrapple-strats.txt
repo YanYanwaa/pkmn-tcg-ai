@@ -1,0 +1,11 @@
+WINCON:
+Hydrapple has 2 energy and ogerpons spam themselves with energy each turn to strengthen hydrapple
+2 Ogerpons on board using ability each turn
+ALWAYS 1 MEGANIUM ON BENCH AT ALL TIMES
+
+GENERAL PLANS:
+TAPU BULU and MEGANIUM combo to reduce prize cards lost with high damage
+Meowth ability useful if early, attack 3 energy to meowth, attack, attach returned energies to ogerpon/hydrapple
+Celebi only used in early game if no other wincons active (no available meganium/hydrapple)
+Hydrapple generally stronger than ogerpon (ability heals + attack uses all energies) - having meganium + ogerpon makes hydrapple very strong without risking loss of energies
+Dipplin very useful if full bench and enemy has few prize cards 

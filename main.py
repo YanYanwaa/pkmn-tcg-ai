@@ -170,7 +170,7 @@ def get_card(obs: Observation, area: AreaType, index: int, player_index: int) ->
         case _:
             return None
         
-def main_option_proc(obs: Observation, damage: int):
+def main_option_proc(obs: Observation, damage: int, bench_attacker: bool):
     state = obs.current
     select = obs.select
     my_index = state.yourIndex
@@ -266,6 +266,34 @@ def main_option_proc(obs: Observation, damage: int):
         if i == 0:
             plan_b.attack = plan_a.attack
             plan_b.counter = plan_a.counter
+            
+def greedy_select_cards(select, obs, hand_counts, hand_score):
+    """Pick up to select.maxCount cards for TO_HAND/TO_BENCH-style contexts,
+    re-scoring after each pick so duplicates and diminishing returns are
+    handled correctly regardless of option order."""
+    remaining = list(enumerate(select.option))
+    picked = []
+    while remaining and len(picked) < select.maxCount:
+        best_i = None
+        best_score = None
+        best_pos = None
+        for pos, (i, o) in enumerate(remaining):
+            card = get_card(obs, o.area, o.index, o.playerIndex)
+            if card is None:
+                continue
+            s = hand_score(card.id, False)
+            if best_score is None or s > best_score:
+                best_score, best_i, best_pos = s, i, pos
+        if best_i is None:
+            break
+        if best_score < 0 and len(picked) >= select.minCount:
+            break
+        picked.append(best_i)
+        o = select.option[best_i]
+        card = get_card(obs, o.area, o.index, o.playerIndex)
+        hand_counts[card.id] += 1
+        remaining.pop(best_pos)
+    return picked
 
 def agent(obs_dict: dict) -> list[int]:
     """Main Agent Function.
@@ -350,10 +378,19 @@ def agent(obs_dict: dict) -> list[int]:
     can_evolve_dipplin = False
     can_evolve_bayleef = False
     hydrapple_ability = False
+    ogerpon_ability = False
     damage = 60 # TODO change damage based on number of energies (eg if ogerpon in play add my active and op active energies, if hydrapple add all my active, if meganium in play double all my counts)
 
     my_active = my_state.active[0] if len(my_state.active) > 0 else None
     op_active = op_state.active[0] if len(op_state.active) > 0 else None
+
+    active_id = my_active.id if my_active is not None else 0
+
+    stadium_id = 0
+    for card in state.stadium:
+        stadium_id = card.id
+    
+    can_main_attack = any(o.type == OptionType.ATTACK and o.attackId in (120,195,115,1326) for o in select.option)
 
     if active_id == Hydrapple_Ex and can_main_attack:
         energy_count = 0
@@ -370,8 +407,9 @@ def agent(obs_dict: dict) -> list[int]:
             energy_count += len(op_active.energies)
         damage = 30 + (30 * energy_count)
     elif active_id == Tapu_Bulu:
-        damage = 200
+        damage = 220
     elif active_id == Dipplin:
+        benched = 0
         for pokemon in my_state.bench:
             benched += 1
         damage = 2 * (20 * benched)
@@ -381,6 +419,8 @@ def agent(obs_dict: dict) -> list[int]:
         damage = 20
     elif active_id == Chikorita:
         damage = 30 
+    elif active_id == Fezandipiti_Ex:
+        damage = 100
     else:
         damage = 60
     
@@ -389,7 +429,7 @@ def agent(obs_dict: dict) -> list[int]:
             continue
         active_id = card.id
         field_counts[card.id] += 1
-        if not card.appearThisTurn:
+        if not card.appearThisTurn or stadium_id == Forest_of_Vitality:
             if card.id == Applin:
                 can_evolve_applin = True
                 evolve_applin_count += 1
@@ -402,7 +442,7 @@ def agent(obs_dict: dict) -> list[int]:
                 can_evolve_bayleef = True
     for card in my_state.bench:
         field_counts[card.id] += 1
-        if not card.appearThisTurn:
+        if not card.appearThisTurn or stadium_id == Forest_of_Vitality:
             if card.id == Applin:
                 can_evolve_applin = True
                 evolve_applin_count += 1
@@ -421,14 +461,32 @@ def agent(obs_dict: dict) -> list[int]:
             bench_attacker = True
     main_pokemon_count = field_counts[Applin] + field_counts[Dipplin] + field_counts[Hydrapple_Ex] + field_counts[Ogerpon] + field_counts[Chikorita] + field_counts[Bayleef] + field_counts[Meganium]
     
-    stadium_id = 0
-    for card in state.stadium:
-        stadium_id = card.id
 
     support_count = 0
     for card in my_state.discard:
         discard_counts[card.id] += 1
 
+    def do_switch():
+
+        if can_attack and op_active is not None and damage >= op_active.hp:
+            return False
+        elif (not can_main_attack) and bench_attacker:
+            return True
+        elif active_id == Meganium and field_counts[Meganium] <= 1:
+            return True
+        elif my_active is not None:
+            if active_id == Hydrapple_Ex or active_id == Ogerpon or active_id == Meowth_Ex or active_id == Fezandipiti_Ex:
+                if my_active.hp <= 100:
+                    if not bench_attacker and op_active and damage >= (op_active.hp / 2):  
+                        return False
+                    else:
+                        return True
+            else:
+                if active_id != Applin and my_active.hp <= 40:
+                    return True
+        else:
+            return False
+    
     def attach_score(attach_id: int, pokemon: Pokemon, active: bool) -> int:
         if attach_id == 0:
             return -1
@@ -496,14 +554,27 @@ def agent(obs_dict: dict) -> list[int]:
                     elif pokemon.id == Applin:
                         score += 100
                     elif pokemon.id == Dipplin:
-                        score += 200
+                        if hand_counts[Hydrapple_Ex] >= 1:
+                            score += 220
+                        else:
+                            score += 200
                     else:
                         score += 55
             else:
                 if pokemon.id == Hydrapple_Ex:
                     score += 200
                 elif pokemon.id == Applin:
-                    score += 100
+                    if hand_counts[Hydrapple_Ex] >= 1 and hand_counts[Rare_Candy] >= 1:
+                        score += 130
+                    elif hand_counts[Hydrapple_Ex] >= 1 and hand_counts[Dipplin] >= 1:
+                        score += 105
+                    else:
+                        score += 100
+                elif pokemon.id == Dipplin:
+                    if hand_counts[Hydrapple_Ex] >= 1:
+                        score += 120
+                    else:
+                        score += 110
                 elif pokemon.id == Ogerpon:
                     if active:
                         score += 300
@@ -513,11 +584,13 @@ def agent(obs_dict: dict) -> list[int]:
                     score += 50
                 if bench_attacker and pokemon.id != Ogerpon:
                     score -= 200
+            
         
         if (pokemon.id == Tapu_Bulu or pokemon.id == Meganium) and can_attack:
             score -= 1000
         
-      
+        if do_switch() and my_active is not None and my_active.energies == 0:
+            score += 500
         return score
     
 
@@ -805,9 +878,12 @@ def agent(obs_dict: dict) -> list[int]:
         if card_table[card.id].cardType == CardType.SUPPORTER and card.id != Boss_Orders:
             support_count += 1 
     no_draw = (my_state.deckCount <= 8)
-    do_switch = (not can_main_attack and bench_attacker) or (active_id == Meganium and field_counts[Meganium] <= 1)
+    # do_switch = (not can_main_attack and bench_attacker) or (active_id == Meganium and field_counts[Meganium] <= 1)
+    
+        
     effect_card_id = 0 if select.effect == None else select.effect.id
     hydrapple_ability = (effect_card_id == Hydrapple_Ex)
+    ogerpon_ability = (effect_card_id == Ogerpon)
     context_card_id = 0 if select.contextCard == None else select.contextCard.id
 
     scores = []
@@ -836,21 +912,74 @@ def agent(obs_dict: dict) -> list[int]:
                             elif stadium_id != Forest_of_Vitality and ((field_counts[Meganium] == 0 and hand_counts[Meganium] == 0) or (field_counts[Hydrapple_Ex] and hand_counts[Hydrapple_Ex])) and not bench_attacker:
                                 score += 30000
                         elif card.id == Applin:
-                            score += 10000
+                            score += 5000
                         elif card.id == Dipplin:
                             if energy_count >= 1:
                                 score += 20000
                             else:
-                                score -= 10000
+                                score -= 5000
                         elif card.id == Hydrapple_Ex:
-                            score += 60000
+                            hydrapple_energy_count = 0
+                            ogerpon_energy_count = 0
+                            if my_active is not None:
+                                ogerpon_energy_count += len(my_active.energies)
+                            if op_active is not None:
+                                ogerpon_energy_count += len(op_active.energies)
+                            
+                            if my_active is not None:
+                                hydrapple_energy_count += sum(1 for e in my_active.energies if e == EnergyType.GRASS)
+                            for pokemon in my_state.bench:
+                                hydrapple_energy_count += sum(1 for e in pokemon.energies if e == EnergyType.GRASS)
+                                
+                            if energy_count == 1 and hand_counts[Basic_Grass_Energy] >= 1:
+                                score += 51000
+                            elif energy_count == 0 and hand_counts[Basic_Grass_Energy] >= 2 and hydrapple_ability:
+                                score += 52000
+                            elif energy_count >= 2:
+                                score += 53000
+                            if hydrapple_energy_count > ogerpon_energy_count:
+                                score += 10000
+                            
+                            if 60 < hp < 200:
+                                score -= 10000
+                            elif hp < 60:
+                                score -= 30000
+
                         elif card.id == Ogerpon: # TODO update all scores based on if meganium in play or able to be played and num of energy gained
+                            hydrapple_energy_count = 0
+                            ogerpon_energy_count = 0
+                            if my_active is not None:
+                                ogerpon_energy_count += len(my_active.energies)
+                            if op_active is not None:
+                                ogerpon_energy_count += len(op_active.energies)
+                            
+                            if my_active is not None:
+                                hydrapple_energy_count += sum(1 for e in my_active.energies if e == EnergyType.GRASS)
+                            for pokemon in my_state.bench:
+                                hydrapple_energy_count += sum(1 for e in pokemon.energies if e == EnergyType.GRASS)
+
                             if energy_count >= 3:
-                                score += 50000
+                                score += 53000
+                            elif energy_count >= 2:
+                                score += 40000
                             elif energy_count == 1:
                                 score += 29500
                             else:
-                                score -= 100
+                                if hp >= 200:
+                                    score += 6000
+                                elif 100 < hp < 200:
+                                    score += 3500
+                                else:
+                                    score -= 100
+                            
+                            if ogerpon_energy_count > hydrapple_energy_count:
+                                score += 10000
+                            
+                            if 60 < hp < 200:
+                                score -= 10000
+                            elif hp < 60:
+                                score -= 30000
+                            
                         elif card.id == Meowth_Ex:
                             score -= 2000
                         elif card.id == Fezandipiti_Ex:
@@ -860,7 +989,10 @@ def agent(obs_dict: dict) -> list[int]:
                         elif card.id == Bayleef: # TODO change diff bayleef scores based on op bench and active hp
                             score -= 4000
                         elif card.id == Meganium: # TODO change later based on if backup meganium
-                            score -= 2100
+                            if field_counts[Meganium] >= 2:
+                                if energy_count >= 2:
+                                    score += 5500
+                            score -= 5000
                         elif card.id == Tapu_Bulu:
                             if field_counts[Meganium] >= 1:
                                 if energy_count >= 2: # TODO check if meganium passive means actual energy count is doubled 
@@ -868,7 +1000,10 @@ def agent(obs_dict: dict) -> list[int]:
                                 elif energy_count == 1:
                                     score += 31000
                             else:
-                                score -= 7000
+                                if hp <= 70:
+                                    score -= 7000
+                                else:
+                                    score -= 10000
                     else:
                         if plan_a.attack == o.index + 1:
                             score += 100000
@@ -963,6 +1098,8 @@ def agent(obs_dict: dict) -> list[int]:
             elif card.id == Celebi:
                 if stadium_id != Forest_of_Vitality and ((field_counts[Meganium] == 0 and hand_counts[Meganium] == 0) or (field_counts[Hydrapple_Ex] and hand_counts[Hydrapple_Ex])):
                     score = 53000
+                elif my_state.bench == 0:
+                    score = 5000
                 else:
                     score = -1
             elif card.id == Tapu_Bulu:
@@ -971,9 +1108,9 @@ def agent(obs_dict: dict) -> list[int]:
                 else:
                     score = -1
             elif card.id == Ogerpon:
-                if active_id == Ogerpon or active_id == Hydrapple_Ex:
+                if active_id == Hydrapple_Ex:
                     score = 50500
-                elif field_counts[Ogerpon] >= 2:
+                if field_counts[Ogerpon] >= 2:
                     score = -1
                 elif field_counts[Ogerpon] == 1:
                     score = 45000
@@ -1003,21 +1140,31 @@ def agent(obs_dict: dict) -> list[int]:
             elif card.id == Boss_Orders:
                 if card.id == use_support:
                     score = 35000
+                elif op_state.bench is not None and op_active is not None:
+                    for pokemon in op_state.bench:
+                        if len(pokemon.energies) < len(op_active.energies):
+                            score = 25000
                 else:
                     score = -1
             elif card.id == Lillie_Determination:
                 if card.id == use_support:
                     score = 14000
+                elif my_state.active == 1 and hand_counts[Applin] == 0 and hand_counts[Chikorita] == 0 and hand_counts[Celebi] == 0 and hand_counts[Tapu_Bulu] == 0 and hand_counts[Ogerpon] == 0 and hand_counts[Meowth_Ex] == 0 and hand_counts[Fezandipiti_Ex] == 0:
+                    score = 10000
                 else:
                     score = -1
             elif card.id == Ultra_Ball:
                 if negative_hand_count >= 2:
                     score = 44000
+                elif my_state.active == 1 and hand_counts[Applin] == 0 and hand_counts[Chikorita] == 0 and hand_counts[Celebi] == 0 and hand_counts[Tapu_Bulu] == 0 and hand_counts[Ogerpon] == 0 and hand_counts[Meowth_Ex] == 0 and hand_counts[Fezandipiti_Ex] == 0:
+                    score = 42000
                 else:
                     score = -1
             elif card.id == Poke_Pad:
                 if deck_counts[Applin] + deck_counts[Dipplin] + deck_counts[Chikorita] + deck_counts[Bayleef] + deck_counts[Meganium] > 0:
                     score = 45000
+                elif my_state.active == 1 and hand_counts[Applin] == 0 and hand_counts[Chikorita] == 0 and hand_counts[Celebi] == 0 and hand_counts[Tapu_Bulu] == 0 and hand_counts[Ogerpon] == 0 and hand_counts[Meowth_Ex] == 0 and hand_counts[Fezandipiti_Ex] == 0:
+                    score = 44500
                 else:
                     score = -1
             elif card.id == Forest_of_Vitality:
@@ -1031,7 +1178,7 @@ def agent(obs_dict: dict) -> list[int]:
                     score = -1
             elif card.id == Bug_Catching_Set:
                 if card_score >= 16000:
-                    score = 43000
+                    score = 45000
                 else:
                     score = -1
             elif card.id == Ciphermaniac_Codebreaking:
@@ -1052,6 +1199,9 @@ def agent(obs_dict: dict) -> list[int]:
                     score = 36000
                 else:
                     score = -1
+            if card == CardType.POKEMON:
+                if my_state.bench is None:
+                    score = 60000
         elif o.type == OptionType.ATTACH:
             card = get_card(obs, o.area, o.index, my_index)
             pokemon = get_card(obs, o.inPlayArea, o.inPlayIndex, my_index)
@@ -1079,7 +1229,7 @@ def agent(obs_dict: dict) -> list[int]:
                 if is_active:
                     # Always use Teal Dance while the active Ogerpon can still benefit.
                     if hand_counts[Basic_Grass_Energy] >= 1:
-                        score = 90000
+                        score = 80000
                     else:
                         score = -1
                 else:
@@ -1091,11 +1241,11 @@ def agent(obs_dict: dict) -> list[int]:
         
             elif card.id == Hydrapple_Ex:
                     hydrapple_ability = True
-                    score = 80000
+                    score = 90000
             else:
                 score = 40000
         elif o.type == OptionType.RETREAT:
-            if do_switch:
+            if do_switch():
                 score = 10000
             else: score = -1
         elif o.type == OptionType.ATTACK:
@@ -1103,8 +1253,11 @@ def agent(obs_dict: dict) -> list[int]:
 
         scores.append(score)
     output = []
-    if len(scores) >= 1:
-
+    if context in (SelectContext.TO_HAND, SelectContext.TO_BENCH) and select.deck is not None:
+        # Deck-search style selection (Ultra Ball, Poke Pad, Bug Catching Set,
+        # Ciphermaniac's Codebreaking, Lana's Aid, Night Stretcher, Dawn, Celebi's attack...)
+        output = greedy_select_cards(select, obs, hand_counts, hand_score)
+    elif len(scores) >= 1:
         sorted_scores = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
         for i in range(select.maxCount):
             if(sorted_scores[i][1] >= 0 or select.minCount > i or (context != SelectContext.TO_BENCH and context != SelectContext.SETUP_BENCH_POKEMON)):
@@ -1139,3 +1292,15 @@ def agent(obs_dict: dict) -> list[int]:
 # TODO ogerpon W/1G switched to active over ogerpon W/2G 
 
 # TODO apply switching choices
+
+# TODO i think ciphermaniac + pokepad + bug catcher always super high score (add multiple cards scores) - need to simulate selecting card to give accurate usage score
+
+# TODO if dipplin in active W/0G and ogerpon on bench W/2G and hydrapple in hand, attach energy to dipplin then use hydrapple ability to attach energy the attack
+
+#TODO if applin and dipplin both W/1G, energy attaches to applin rather than dipplin
+
+#TODO lots of people using lucario/lunatone/solrock/hariyama deck - research + counter
+
+#TODO if only 1 pokemon on board but celebi in hand after turn 2, doesnt play celebi, should play celebi and attack if no useful pokemon (applin, chikorita, ogerpon)
+
+#TODO applin active and applin on bench both W/0G ogerpon on bench W/2G, applin active dies, chooses applin to switch next over ogerpon

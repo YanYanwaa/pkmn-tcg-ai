@@ -1,7 +1,7 @@
 import os
 import sys
 from collections import defaultdict
-from main import no_damage_dex, no_damage_counter, prize_count, pokemon_score, add_card_count, set_card_counts, get_card, main_option_proc
+from main import greedy_select_cards ,no_damage_dex, no_damage_counter, prize_count, pokemon_score, add_card_count, set_card_counts, get_card, main_option_proc
 from sdk.api import AreaType, CardType, Log, LogType, Observation, SelectContext, OptionType, Card, Pokemon, State, all_card_data, to_observation_class, EnergyType
 
 file_path = "decks/hydrapple.csv"
@@ -270,6 +270,27 @@ def offence_agent(obs_dict: dict) -> list[int]:
     for card in my_state.discard:
         discard_counts[card.id] += 1
 
+    def do_switch():
+
+        if can_attack and op_active is not None and damage >= op_active.hp:
+            return False
+        elif (not can_main_attack) and bench_attacker:
+            return True
+        elif active_id == Meganium and field_counts[Meganium] <= 1:
+            return True
+        elif my_active is not None:
+            if active_id == Hydrapple_Ex or active_id == Ogerpon or active_id == Meowth_Ex or active_id == Fezandipiti_Ex:
+                if my_active.hp <= 100:
+                    if not bench_attacker and op_active and damage >= (op_active.hp / 2):  
+                        return False
+                    else:
+                        return True
+            else:
+                if active_id != Applin and my_active.hp <= 40:
+                    return True
+        else:
+            return False
+        
     def attach_score(attach_id: int, pokemon: Pokemon, active: bool) -> int:
         score = 4000
         if attach_id == 0:
@@ -317,8 +338,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                 if not can_attack_now(pokemon):
                     score += 250
                 else:
-                    for n in energy_count:
-                        score += 10
+                    if energy_count is not None:
+                        score += energy_count * 10
             else:
                 score += 100
         elif pokemon.id == Tapu_Bulu:
@@ -427,6 +448,7 @@ def offence_agent(obs_dict: dict) -> list[int]:
             if my_state.bench.count == 4 and field_counts[Meganium] == 0 and discard_counts[Meganium] < 2:
                 return -1
 
+            
             if id == Applin:
                 score = 7000
                 if discard_counts[Hydrapple_Ex] == 2 and discard_counts[Dipplin] == 2:
@@ -583,24 +605,367 @@ def offence_agent(obs_dict: dict) -> list[int]:
                                 if card_id == Hydrapple_Ex or card_id == Ogerpon:
                                     score += 50
             elif id == Boss_Orders:
-                score = 2000
+                score = 1000
+                active_prize = 0
+                active_energy = 0
+                bench_prize = 0
+                bench_energy = 0
                 if my_active is not None and op_active is not None and op_state.bench is not None:
-                    if can_attack_now:
+                    if can_attack_now(my_active):
                         if damage_calc(my_active.id,my_active,op_active) >= op_active.hp:
                             active_prize = prize_count(op_active, True)
+                            active_energy = len(op_active.energies)
                         for p in op_state.bench:
-                            if op_state.bench[p] >= 1:
-                                card
+                            if p is not None:
+                                card_hp = p.hp
+                                if damage_calc(my_active.id, my_active, p) >= card_hp:
+                                    bench_prize = prize_count(p, True)
+                                    bench_energy = len(p.energies)
+                        if bench_prize > active_prize:
+                            score += 950
+                        elif bench_prize == active_prize:
+                            if bench_energy > active_energy:
+                                score += 900
+                    else:
+                        score = -1
+            elif id == Prime_Catcher:
+                score = 2000
+                active_prize = 0
+                active_energy = 0
+                bench_prize = 0
+                bench_energy = 0
+                active_hp = 0
+                bench_hp = 0
+                if my_active is not None and op_active is not None and op_state.bench is not None and my_state.bench is not None:
+                    if can_attack_now(my_active):
+                        if damage_calc(my_active.id, my_active, op_active) >= op_active.hp:
+                            active_prize = prize_count(op_active, True)
+                            active_energy = len(op_active.energies)
+                            active_hp = my_active.hp
+                    for p in my_state.bench:
+                        if can_attack_now(p):
+                            for op in op_state.bench:
+                                if damage_calc(p.id, p, op) >= op.hp:
+                                    bench_prize = prize_count(op, True)
+                                    bench_energy = len(op.energies)
+                                    bench_hp = p.hp
+                    if bench_prize > active_prize:
+                        score += 850
+                    elif bench_prize == active_prize:
+                        if bench_energy > active_energy:
+                            score += 800
+                    if bench_hp > active_hp:
+                        score += 110
+                else:
+                    score = -1
+            elif id == Briar:
+                score = 1000
+                if (my_active is not None and op_active is not None and my_active.id == Ogerpon and op_state.prize == 2 and prize_count(op_active, True) < 2):
+                    score += 700
+                else:
+                    score = -1
+            elif id == Poke_Pad:
+                score = max(
+                    hand_score(Meganium, ignore_count, _in_progress),
+                    hand_score(Celebi, ignore_count, _in_progress),
+                    hand_score(Bayleef, ignore_count, _in_progress),
+                    hand_score(Chikorita, ignore_count, _in_progress),
+                    hand_score(Applin, ignore_count, _in_progress),
+                    hand_score(Dipplin, ignore_count, _in_progress),
+                    hand_score(Tapu_Bulu, ignore_count, _in_progress),
+                )
+            elif id == Lillie_Determination:
+                score = 0
+                bad_cards = 0
+                num_cards = 0
+                if hand_counts[Basic_Grass_Energy] == 0:
+                    score = 5000
+                else:
+                    for c in hand_counts:
+                        if hand_counts[c] >= 1:
+                            num_cards += 1
+                            if hand_score(c, ignore_count,_in_progress) < 0:
+                                bad_cards += 1
+                    if bad_cards >= num_cards/2:
+                        score = 1500
+                    else:
+                        score = -1
 
-#TODO add can kill bench function comparing scores + energy (include ogerpon if given an extra energy) for bosses orders switch and before energy attachment
-
-                         
-                            
-                
-
-                
-
+            elif id == Forest_of_Vitality:
+                score = 2000
+                if stadium_id != 0 and stadium_id != Forest_of_Vitality:
+                    score += 990
+                elif stadium_id == 0:
+                    score += 980
+            elif id == Ciphermaniac_Codebreaking:
+                score = 0
+                searchable_ids = [i for i in deck_counts if deck_counts[i] > 0]
+                first_id = max(searchable_ids, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                first_score = hand_score(first_id, ignore_count, _in_progress) if first_id is not None else 0
+                remaining_ids = [i for i in searchable_ids if i != first_id]
+                second_id = max(remaining_ids, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                second_score = hand_score(second_id, ignore_count, _in_progress) if second_id is not None else 0
+                score = first_score + second_score
+            elif id == Ultra_Ball:
+                score = 0
+                bad_cards = 0
+                for c in hand_counts:
+                    if hand_counts[c] >= 1:
+                        if hand_score(c, ignore_count, _in_progress) < 0:
+                            bad_cards += 1
+                if bad_cards >= 2:
+                    if field_counts[Hydrapple_Ex] < 1 and deck_counts[Hydrapple_Ex] >= 1:
+                        score = hand_score(Hydrapple_Ex, ignore_count, _in_progress)
+                    elif field_counts[Meganium] < 1 and deck_counts[Meganium] >= 1:
+                        score = hand_score(Meganium, ignore_count, _in_progress)
+                    elif field_counts[Ogerpon] < 1 and deck_counts[Ogerpon] >= 1:
+                        score = hand_score(Ogerpon, ignore_count, _in_progress)
+                    elif field_counts[Meganium] < 1 and field_counts[Bayleef] < 1 and deck_counts[Bayleef] >= 1 :
+                        score = hand_score(Bayleef, ignore_count, _in_progress)
+                    elif field_counts[Meganium] < 1 and field_counts[Bayleef] < 1 and field_counts[Chikorita] < 1 and deck_counts[Chikorita] >= 1:
+                        score = hand_score(Chikorita, ignore_count, _in_progress)
+                    elif field_counts[Dipplin] < 1 and field_counts[Hydrapple_Ex] < 1 and deck_counts[Dipplin] >= 1:
+                        score = hand_score(Dipplin, ignore_count, _in_progress)
+                    elif field_counts[Tapu_Bulu] < 1 and deck_counts[Tapu_Bulu] >= 1:
+                        score = hand_score(Tapu_Bulu, ignore_count, _in_progress)
+                else:
+                    score = -1
+            elif id == Bug_Catching_Set:
+                score = 0
+                searchable_ids = [i for i in deck_counts if deck_counts[i] > 0]
+                first_id = max(searchable_ids, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                first_score = hand_score(first_id, ignore_count, _in_progress) if first_id is not None else 0
+                remaining_ids = [i for i in searchable_ids if i != first_id]
+                second_id = max(remaining_ids, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                second_score = hand_score(second_id, ignore_count, _in_progress) if second_id is not None else 0
+                score = first_score + second_score
+            elif id == Lana_Aid:
+                score = 0
+                searchable_ids_disc = [i for i in discard_counts if discard_counts[i] > 0 and (i == Meganium or i == Bayleef or i == Chikorita or i == Tapu_Bulu or i == Celebi or i == Applin or i == Dipplin or i == Basic_Grass_Energy)]
+                first_id = max(searchable_ids_disc, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                first_score = hand_score(first_id, ignore_count, _in_progress) if first_id is not None else 0
+                remaining_ids = [i for i in searchable_ids_disc if i != first_id]
+                second_id = max(remaining_ids, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                second_score = hand_score(second_id, ignore_count, _in_progress) if second_id is not None else 0
+                remaining_ids = [i for i in searchable_ids_disc if (i != first_id and i != second_id)]
+                third_id = max(remaining_ids, key=lambda i: hand_score(i, ignore_count, _in_progress), default=None)
+                third_score = hand_score(third_id, ignore_count, _in_progress) if third_id is not None else 0
+                score = first_score + second_score + third_score
+            elif id == Dawn:
+                score = 2000
+                missing_card = 0 
+                if field_counts[Meganium] < 1 and hand_counts[Meganium] < 1:
+                    score += 100
+                    missing_card += 1
+                if field_counts[Hydrapple_Ex] < 1 and hand_counts[Hydrapple_Ex] < 1:
+                    score += 100
+                    missing_card += 1
+                if field_counts[Ogerpon] < 1 and hand_counts[Ogerpon] < 1:
+                    score += 100
+                    missing_card += 1
+                if field_counts[Meganium] < 1 and hand_counts[Meganium] < 1 and field_counts[Bayleef] < 1 and hand_counts[Bayleef] < 1:
+                    score += 100
+                    missing_card += 1
+                if field_counts[Hydrapple_Ex] < 1 and hand_counts[Hydrapple_Ex] < 1 and field_counts[Dipplin] < 1 and hand_counts[Dipplin] < 1:
+                    score += 100
+                    missing_card += 1
+                if missing_card == 0:
+                    score += 10
+                else:
+                    score = -1
+            elif id == Basic_Grass_Energy:
+                score = 5000
+            else:
+                score = 0
+            if not ignore_count and hand_counts[id] > 0:
+                        if id == Dipplin and hand_counts[id] < evolve_applin_count:
+                            score -= 10
+                        elif id == Applin:
+                            score -= 100
+                        elif id == Bayleef and hand_counts[id] < evolve_chikorita_count:
+                            score -= 10
+                        elif id == Chikorita:
+                            score -= 100
+                        else:
+                            score -= 10000                      
             return score
+    global use_support
+    if context == SelectContext.MAIN:
+        main_option_proc(obs, damage, bench_attacker)
+    
+        use_support = 0
+        if not state.supporterPlayed:
+            support_score = 0
+            for o in select.option:
+                    if o.type == OptionType.PLAY:
+                        card = get_card(obs,AreaType.HAND, o.index, state.yourIndex)
+                        if card_table[card.id].cardType == CardType.SUPPORTER:
+                            score = hand_score(card.id, True)
+                            if support_score < score:
+                                support_score = score
+                                use_support = card.id
+        hand_scores = []
+        negative_hand_count = 0
+        for card in my_state.hand:
+            score = hand_score(card.id, False)
+            hand_scores.append(score)
+            if score < 0:
+                negative_hand_count += 1
+            hand_counts[card.id] += 1
+            if card_table[card.id].cardType == CardType.SUPPORTER and card.id != Boss_Orders:
+                support_count += 1 
+        no_draw = (my_state.deckCount <= 8)
+        # do_switch = (not can_main_attack and bench_attacker) or (active_id == Meganium and field_counts[Meganium] <= 1)
+        
+            
+        effect_card_id = 0 if select.effect == None else select.effect.id
+        hydrapple_ability = (effect_card_id == Hydrapple_Ex)
+        ogerpon_ability = (effect_card_id == Ogerpon)
+        context_card_id = 0 if select.contextCard == None else select.contextCard.id
+    
+    scores = []
+    for o in select.option:
+            score = 0
+            if o.type == OptionType.NUMBER:
+                score = o.number
+            elif o.type == OptionType.YES:
+                if context == SelectContext.IS_FIRST:
+                    score = -1
+                else:
+                    score = 1
+            elif o.type == OptionType.CARD:
+                card = get_card(obs,o.area,o.index,o.playerIndex)
+                if card != None:
+                    energy_count = 0
+                    hp = 0
+                    if isinstance(card, Pokemon):
+                        energy_count = len(card.energies)
+                        hp = card.hp
+                    if (context == SelectContext.SWITCH or context == SelectContext.TO_ACTIVE or context == SelectContext.SETUP_ACTIVE_POKEMON):
+                        if o.playerIndex == my_index:
+                            score = 7000
+                            if card.id == Celebi:
+                                if context == SelectContext.SETUP_ACTIVE_POKEMON:
+                                    score += 3000
+                                else:
+                                    score = -1
+                            else:
+                                score += hp
+                                score += energy_count * 10 
+                                if my_active is not None and op_active is not None:
+                                    score += damage_calc(card.id,card, op_active)
+                        elif my_active is not None and op_active is not None and op_state.bench is not None:
+                            score = 7000
+                            can_ko = damage_calc(my_active.id, my_active, card) >= hp
+                            if prize_count(card, True) > prize_count(op_active, True) and can_ko:
+                                score += 1000
+                            elif prize_count(card, True) == prize_count(op_active, True) and can_ko:
+                                energy_count = len(card.energies)
+                                score += energy_count * 100
+                            elif not can_ko:
+                                score -= 500
+                                energy_count = len(card.energies)
+                                score -= energy_count * 100
+
+                        else:
+                            if plan_a.attack == o.index + 1:
+                                score += 10000
+                    elif context == SelectContext.SETUP_BENCH_POKEMON:
+                        if my_index == state.firstPlayer or (card.id == Chikorita and field_counts[Chikorita] >= 1):
+                            score = -1
+                        elif my_state.bench is not None and len(my_state.bench) == 4 and field_counts[Chikorita] < 1:
+                            score = -1
+                    elif context == SelectContext.TO_BENCH or context == SelectContext.TO_HAND:
+                        score = hand_score(card.id, False)
+                        if context == SelectContext.TO_HAND:
+                            hand_counts[card.id] += 1
+                    elif context == SelectContext.DISCARD:
+                        hand_counts[card.id] -= 1
+                        if card_table[card.id].cardId == CardType.SUPPORTER:
+                            support_count -= 1
+                        score = -hand_score(card.id, False)
+                    elif context == SelectContext.DAMAGE_COUNTER or context == SelectContext.DAMAGE_COUNTER_ANY:
+                        score = 500 - hp
+                        score = score * prize_count(card,True)
+                    elif context == SelectContext.ATTACH_FROM:
+                        if select.contextCard is None:
+                            score = -1
+                        else:
+                            score = attach_score(select.contextCard.id, card, o.area == AreaType.Active)
+                        if card.id == Hydrapple_Ex and len(card.energies) < 2:
+                            score += 350
+                        elif card.id == Ogerpon:
+                            score += 300
+                    elif context == SelectContext.ATTACH_TO:
+                        if select.contextCard is None:
+                            score = -1
+                        else:
+                            pokemon = get_card(obs, o.area, o.index, my_index)
+                            if hydrapple_ability:
+                                score = hydrapple_attach_score(pokemon)
+                            else:
+                                if card.id == Basic_Grass_Energy:
+                                    score += 500
+            elif o.type == OptionType.ENERGY_CARD or o.type == OptionType.ENERGY:
+                if o.playerIndex != state.yourIndex:
+                    if o.area == AreaType.BENCH:
+                        score = 20
+                    else:
+                        score = 10
+                    card = get_card(obs, o.area, o.index, o.playerIndex)
+                    if card_table[card.id].cardType == CardType.SPECIAL_ENERGY:
+                        score += 10
+            elif o.type == OptionType.PLAY:
+                card = get_card(obs, AreaType.HAND, o.index, my_index)
+                score = hand_scores[o.index]
+            elif o.type == OptionType.ATTACH:
+                card = get_card(obs, o.area, o.index, my_index)
+                pokemon = get_card(obs, o.inPlayArea, o.inPlayIndex, my_index)
+                score = attach_score(card.id, pokemon, o.inPlayArea == AreaType.ACTIVE)
+            elif o.type == OptionType.EVOLVE:
+                score = 6000
+                pokemon = get_card(obs, o.inPlayArea, o.inPlayIndex, my_index)
+                score += len(pokemon.energies) * 10
+            elif o.type == OptionType.ABILITY:
+                is_active = (o.area == AreaType.ACTIVE)
+                card = get_card(obs,o.area, o.index, my_index)
+                if no_draw:
+                    score = -1
+                elif card.id == 1267:
+                    score = 1
+                elif card.id == Hydrapple_Ex:
+                    hydrapple_ability = True
+                    score = 4900
+                elif card.id == Ogerpon:
+                    if is_active:
+                        if hand_counts[Basic_Grass_Energy] >= 1:
+                            score = 3500
+                        else:
+                            score = -1
+                    else:
+                        if hand_counts[Basic_Grass_Energy] <= 1 and not can_main_attack:
+                            score = -1
+                        else:
+                            score = 3250
+            elif o.type == OptionType.RETREAT:
+                if do_switch():
+                    score = 5000
+                else:
+                    score = -1
+            elif o.type == OptionType.ATTACK:
+                score = o.attackId
+            scores.append(score)
+    output = []
+    if context in (SelectContext.TO_HAND, SelectContext.TO_BENCH) and select.deck is not None:
+        output = greedy_select_cards(select, obs, hand_counts, hand_score)
+    elif len(scores) >= 1:
+        sorted_scores = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
+        for i in range(select.maxCount):
+            if(sorted_scores[i][1] >= 0 or select.minCount > i or (context != SelectContext.TO_BENCH and context != SelectContext.SETUP_BENCH_POKEMON)):
+                output.append(sorted_scores[i][0])
+    return output
+                    
+                    
     
 
     ## ADD "DEF CAN_ATTACK()" TO CHECK IF BETTER BENCHED ATTACKER CAN ATTACK - MAYBE UPDATE CAN ATTACK OR CAN MAIN ATTACK HERE
