@@ -2,7 +2,8 @@ import os
 import sys
 from collections import defaultdict
 from lib import greedy_select_cards ,no_damage_dex, no_damage_counter, prize_count, pokemon_score, add_card_count, set_card_counts, get_card, main_option_proc
-from sdk.api import AreaType, CardType, Log, LogType, Observation, SelectContext, OptionType, Card, Pokemon, State, all_card_data, to_observation_class, EnergyType
+from sdk.api import all_attack,AreaType, CardType, Log, LogType, Observation, SelectContext, OptionType, Card, Pokemon, State, all_card_data, to_observation_class, EnergyType
+import threat_detection as td
 
 file_path = "deck.csv"
 if not os.path.exists(file_path):
@@ -16,6 +17,12 @@ for i in range(60):
 all_card = all_card_data()
 
 card_table = {c.cardId:c for c in all_card}
+
+CARD_DATA = {c.cardId: c for c in all_card_data()}
+ATTACK_DATA = {a.attackId: a for a in all_attack()}
+_threat_detector = td.ThreatDetector(CARD_DATA, ATTACK_DATA)
+HIGH_THREAT_TRIGGER = 7.0
+
 
 Ogerpon = 96 # 4
 Chikorita = 917 # 2
@@ -81,7 +88,10 @@ def offence_agent(obs_dict: dict) -> list[int]:
     my_index = state.yourIndex
     my_state = state.players[my_index]
     op_state = state.players[1 - my_index]
-            
+
+    board_threat = _threat_detector.score_board(op_state)
+    high_threat = board_threat["active_threat"] >= HIGH_THREAT_TRIGGER
+
     if state.turn == 0:
         prize.clear()
         pre_turn_log.clear()
@@ -1012,6 +1022,11 @@ def offence_agent(obs_dict: dict) -> list[int]:
                     score = 10000
             else:
                 score = 0              
+
+            if card_table[id].basic == True:
+                if my_active is not None and len(my_state.bench) == my_state.benchMax and my_active.hp > 30 and not high_threat:
+                    score = -1
+                
             return score
     global use_support
     if context == SelectContext.MAIN:

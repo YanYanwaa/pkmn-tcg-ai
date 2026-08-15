@@ -2,7 +2,8 @@ import os
 import sys
 from collections import defaultdict
 from lib import greedy_select_cards ,no_damage_dex, no_damage_counter, prize_count, pokemon_score, add_card_count, set_card_counts, get_card, main_option_proc
-from sdk.api import AreaType, CardType, Log, LogType, Observation, SelectContext, OptionType, Card, Pokemon, State, all_card_data, to_observation_class, EnergyType
+from sdk.api import all_attack,AreaType, CardType, Log, LogType, Observation, SelectContext, OptionType, Card, Pokemon, State, all_card_data, to_observation_class, EnergyType
+import threat_detection as td
 
 file_path = "deck.csv"
 if not os.path.exists(file_path):
@@ -12,6 +13,10 @@ with open(file_path, "r") as file:
 my_deck = []
 for i in range(60):
     my_deck.append(int(csv[i]))
+
+CARD_DATA = {c.cardId: c for c in all_card_data()}
+ATTACK_DATA = {a.attackId: a for a in all_attack()}
+_threat_detector = td.ThreatDetector(CARD_DATA, ATTACK_DATA)
 
 all_card = all_card_data()
 
@@ -81,7 +86,11 @@ def defence_agent(obs_dict: dict) -> list[int]:
     my_index = state.yourIndex
     my_state = state.players[my_index]
     op_state = state.players[1 - my_index]
-            
+
+    board_threat = _threat_detector.score_board(op_state)
+    active_threat = board_threat["active_threat"]
+
+    
     if state.turn == 0:
         prize.clear()
         pre_turn_log.clear()
@@ -338,53 +347,68 @@ def defence_agent(obs_dict: dict) -> list[int]:
         attacker = 0
         if op_active is not None and my_active is not None and can_attack_now(my_active) and damage_calc(my_active.id, my_active, op_active) >= op_active.hp:
             return False
-        elif my_active is not None and not can_attack_now(my_active) and better_bench_attacker(my_active.id, my_active, op_active):
+        if my_active is not None and not can_attack_now(my_active) and better_bench_attacker(my_active.id, my_active, op_active):
             for p in my_state.bench:
                 if can_attack_now(p):
                     attacker += 1
                     if prize_count(p, True) > 1:
                         bench_ex += 1
-                    if op_active is not None:
-                        if damage_calc(p.id, p, op_active) >= op_active.hp:
-                            bench_ex -= 1 
+                        if op_active is not None:
+                            if damage_calc(p.id, p, op_active) >= op_active.hp:
+                                bench_ex -= 1 
                 if attacker == bench_ex:
                     return False
             return True
-        elif my_active.id == Meganium and field_counts[Meganium] <= 1:
+        if my_active is not None and can_attack_now(my_active) and damage_calc(my_active.id, my_active,op_active) < op_active.hp and better_bench_attacker(my_active.id, my_active, op_active):
+            for p in my_state.bench:
+                if can_attack_now(p):
+                    bench_damage = damage_calc(p.id, p, op_active)
+                    if p.id == Hydrapple_Ex:
+                        bench_damage -= 30 * (card_table[my_active.id].retreatCost)
+                    if bench_damage >= op_active.hp:
+                        return True
+
+        if my_active.id == Meganium and field_counts[Meganium] <= 1:
             if op_active is not None and can_attack_now(my_active) and damage_calc(my_active.id, my_active,op_active) >= op_active.hp:
                 return False
             return True
-        else:
-            if my_active is not None:
-                if my_active.id == Hydrapple_Ex or my_active.id == Ogerpon or my_active.id == Meowth_Ex or my_active.id == Fezandipiti_Ex:
-                    if op_active is not None and (op_active.id == 345 or op_active.id == 330):
+        
+        if my_active is not None:
+            if my_active.id == Hydrapple_Ex or my_active.id == Ogerpon or my_active.id == Meowth_Ex or my_active.id == Fezandipiti_Ex:
+                if op_active is not None and (op_active.id == 345 or op_active.id == 330):
+                    return True
+                elif op_active is not None and (op_active.id == 678):
+                    if my_active.id == Hydrapple_Ex and my_active.hp > 270:
+                        return False
+                    else:
+                        if active_threat >= 20:
+                            return True
+                        else:
+                            return False
+                elif op_active is not None and (op_active.id == 723):
+                    if my_active.hp <= 200 and active_threat >= 16:
                         return True
-                    elif op_active is not None and (op_active.id == 678):
-                        if my_active.id == Hydrapple_Ex and my_active.hp > 270:
-                            return False
-                        else:
-                            return True
-                    elif op_active is not None and (op_active.id == 723):
-                        if my_active.hp <= 200:
-                            return True
-                        else:
-                            return False
-                    elif op_active is not None and (op_active.id == 1031):
-                        if my_active.hp <= 210:
-                            return True
-                        else:
-                            return False
-                    if my_active.hp <= 100:
-                        if op_active is not None and not better_bench_attacker(my_active.id,my_active,op_active) and damage_calc(my_active.id, my_active, op_active) >= (op_active.hp / 2):  
-                            return False
-                        else:
-                            return True
-                else:
-                    if my_active.id != Applin and my_active.hp <= 40:
+                    else:
+                        return False
+                elif op_active is not None and (op_active.id == 1031):
+                    if my_active.hp <= 210:
                         return True
-                    elif my_active.id == Applin and my_active.hp <= 20 and hand_counts[Dipplin] < 1:
+                    else:
+                        return False
+                if my_active.hp <= 100:
+                    if op_active is not None and not better_bench_attacker(my_active.id,my_active,op_active) and damage_calc(my_active.id, my_active, op_active) >= (op_active.hp / 2):  
+                        return False
+                    else:
                         return True
-            return False
+            else:
+                if active_threat >= 14:
+                    return True
+                if my_active.id != Applin and my_active.hp <= 40:
+                    return True
+                elif my_active.id == Applin and my_active.hp <= 20 and hand_counts[Dipplin] < 1:
+                    return True
+                
+        return False
         
     def attach_score(attach_id: int, pokemon: Pokemon, active: bool) -> int:
         score = 4000
@@ -815,7 +839,7 @@ def defence_agent(obs_dict: dict) -> list[int]:
                                 score -= 1001
                     elif not can_attack_now(my_active):
                         score += 1000
-                    elif damage_calc(my_active.id, my_active, op_active) and can_attack_now(my_active):
+                    elif damage_calc(my_active.id, my_active, op_active) >= op_active.hp and can_attack_now(my_active):
                         score -= 1001
                 else:
                     score -= 1001
@@ -1173,6 +1197,8 @@ def defence_agent(obs_dict: dict) -> list[int]:
                         score = card_score
                     elif card.id == Boss_Orders:
                         score = card_score
+                        if active_threat >= 16:
+                            score = 2000
                     elif card.id == Lillie_Determination: # TODO PLAY MORE OFTEN + TODO CHANGE TRAINERS TO GET MEGANIUM IF NOT AVAILABLE
                         num_cards = 0
                         bad_cards = 0
