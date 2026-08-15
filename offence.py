@@ -1225,6 +1225,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                             score = 2000
                         else:
                             score = card_score
+                        if no_draw:
+                            score = -1
                     elif card.id == Poke_Pad:
                         if card_score >= 7300:
                             score = 2500
@@ -1236,6 +1238,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                             score = -1
                         #elif field_counts[Meganium] >= 1 and my_active is not None and my_active.id != Meganium:
                             #score = -1
+                        if no_draw:
+                            score = -1
                     elif card.id == Forest_of_Vitality:
                         if stadium_id == Forest_of_Vitality:
                             score = -1
@@ -1253,6 +1257,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                             score = 2700
                         else:
                             score = -1
+                        if no_draw:
+                            score = -1
                     elif card.id == Ciphermaniac_Codebreaking:
                         if card_score >= 10000:
                             score = 2300
@@ -1269,6 +1275,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                         if card_score >= 2300:
                             score = 2650
                         else:
+                            score = -1
+                        if no_draw:
                             score = -1
                     elif card.id == Prime_Catcher:
                         score = card_score
@@ -1295,7 +1303,42 @@ def offence_agent(obs_dict: dict) -> list[int]:
                 is_active = (o.inPlayArea == AreaType.ACTIVE)
                 card = get_card(obs,o.area, o.index, my_index)
                 if no_draw and (card.id == Meowth_Ex or card.id == Fezandipiti_Ex or card.id == Ogerpon):
-                    score = -1
+                    if card.id == Ogerpon:
+                        can_ko = False
+                        if is_active:
+                            if field_counts[Meganium] >= 1:
+                                if op_active is not None and (damage_calc(card.id, card, op_active) == (op_active.hp - 60)) and len(card.energies) >= 2:
+                                    can_ko = True
+                            else:
+                                if op_active is not None and (damage_calc(card.id, card, op_active) == (op_active.hp - 30)) and len(card.energies) >= 2:
+                                    can_ko = True
+                        else:
+                            if my_active is not None and my_active.id == Hydrapple_Ex:
+                                if field_counts[Meganium] >= 1:
+                                    if op_active is not None and (damage_calc(my_active.id, my_active, op_active) == (op_active.hp - 60)) and can_attack_now(my_active):
+                                        can_ko = True
+                                else:
+                                    if op_active is not None and (damage_calc(my_active.id, my_active, op_active) == (op_active.hp - 30)) and can_attack_now(my_active):
+                                        can_ko = True
+                        if my_state.deckCount <= 3:
+                            enough_prize_to_win = False
+                            if can_ko and op_active is not None:
+                                if (len(my_state.prize) == 1 and prize_count(op_active, True) >= 1):
+                                    enough_prize_to_win = True
+                                elif (len(my_state.prize) == 2 and prize_count(op_active, True) >= 2):
+                                    enough_prize_to_win = True
+                                elif (len(my_state.prize) == 3 and prize_count(op_active, True) >= 3):
+                                    enough_prize_to_win = True
+                            if enough_prize_to_win:
+                                score = 3250
+                            else:
+                                score = -1
+                        elif can_ko:
+                            score = 3250
+                        else:
+                            score = -1
+                    else:
+                        score = -1
                 elif card.id == 1267:
                     score = 2
                 elif card.id == Hydrapple_Ex:
