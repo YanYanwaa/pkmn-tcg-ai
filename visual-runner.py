@@ -6,6 +6,7 @@ from defence import defence_agent
 from random_agent import random_agent
 from general_agent import make_general_agent
 from sdk.game import battle_start, battle_finish, battle_select, visualize_data
+from original import agent as boss_agent
 
 with open("deck.csv") as f:
     deck1 = [int(line) for line in f.readlines() if line.strip()]
@@ -14,7 +15,7 @@ with open("lucario.csv") as f:
 
 general_agent = make_general_agent(deck2)
 
-obs_dict, _ = battle_start(deck1, deck2)
+obs_dict, _ = battle_start(deck1, deck1)
 obs_log = [""]
 action_log = [None]
 while True:
@@ -22,7 +23,7 @@ while True:
         break
 
     index = obs_dict["current"]["yourIndex"]
-    agent_index = main_agent if index == 0 else general_agent
+    agent_index = main_agent if index == 0 else boss_agent
 
     action = agent_index(obs_dict)
     obs_dict.pop("search_begin_input")

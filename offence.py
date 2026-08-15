@@ -1280,6 +1280,11 @@ def offence_agent(obs_dict: dict) -> list[int]:
                             score = -1
                     elif card.id == Prime_Catcher:
                         score = card_score
+                        if do_switch():
+                            if my_active is not None and my_state.bench is not None:
+                                if not can_retreat(my_active):
+                                    if len(my_active.energies) <= card_table[my_active.id].retreatCost - 2:
+                                        score = 1000
                     elif card.id == Basic_Grass_Energy:
                         score = 4800
                 
@@ -1367,6 +1372,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                             # once all ogeprons can attack, only highest energy ogerpon uses ability
                         else:
                             score = 3250
+                    if op_active is not None and can_attack_now(card) and damage_calc(card.id, card, op_active) >= op_active.hp and damage_calc(card.id, card, op_active) >= 380:
+                        score = -1
             elif o.type == OptionType.RETREAT:
                 if do_switch():
                     score = 5000

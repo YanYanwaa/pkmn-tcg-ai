@@ -1360,13 +1360,14 @@ def defence_agent(obs_dict: dict) -> list[int]:
                         else:
                             score = -1
                     else:
-                        if hand_counts[Basic_Grass_Energy] <= 1 and not can_retreat(my_active) and do_switch():
+                        if hand_counts[Basic_Grass_Energy] <= 1 and my_active is not None and not can_retreat(my_active) and do_switch():
                             score = -1
                         else:
                             score = 3250
                     score += len(card.energies) * 10
                     score += card.hp
-                
+                    if op_active is not None and can_attack_now(card) and damage_calc(card.id, card, op_active) >= op_active.hp and damage_calc(card.id, card, op_active) >= 380:
+                        score = -1                
             elif o.type == OptionType.RETREAT:
                 if do_switch():
                     score = 5000

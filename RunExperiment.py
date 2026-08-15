@@ -20,7 +20,7 @@ from defence import defence_agent
 from setup_agent import agent as setup_agent
 import threat_detection as td
 from sdk.api import AreaType, LogType, SelectContext, all_card_data, to_observation_class
-
+from original import agent as boss_agent
 # id -> name lookup, used to make the opening-pokemon report readable
 CARD_NAMES = {c.cardId: c.name for c in all_card_data()}
 
@@ -183,18 +183,18 @@ def main():
     with open("lucario.csv") as f:
         deck2 = [int(line) for line in f.readlines() if line.strip()]
     NUM_RUNS = 500
-    NAMES = ["defence_agent", "random_agent"]
+    NAMES = ["main_agent", "boss_agent"]
 
     tracker = Tracker()
 
     # Wrap once; the wrapped closures read tracker's live counters each call,
     # which we reset via tracker.start_game() before every episode.
-    agent_a = make_tracking_agent(defence_agent, tracker)
-    agent_b = make_tracking_agent(random_agent, tracker)
+    agent_a = make_tracking_agent(main_agent, tracker)
+    agent_b = make_tracking_agent(boss_agent, tracker)
 
     for run_no in range(1, NUM_RUNS + 1):
         # Fresh env per game avoids relying on cabt's internal reset behaviour.
-        env = make("cabt", configuration={"decks": [deck1, deck2]})
+        env = make("cabt", configuration={"decks": [deck1, deck1]})
 
         tracker.start_game()
         env.run([agent_a, agent_b])

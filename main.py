@@ -20,7 +20,7 @@ CARD_DATA = {c.cardId: c for c in all_card_data()}
 ATTACK_DATA = {a.attackId: a for a in all_attack()}
 _threat_detector = td.ThreatDetector(CARD_DATA, ATTACK_DATA)
 
-HIGH_THREAT_TRIGGER = 10.0
+HIGH_THREAT_TRIGGER = 11.0
 
 def agent(obs_dict: dict) -> list[int]:
     obs = to_observation_class(obs_dict)
@@ -44,8 +44,6 @@ def agent(obs_dict: dict) -> list[int]:
         print("Using Offence")
         return offence_agent(obs_dict)
 
-#OFFENCE DEFENCE TODO when bench + active full, basic pokemon score = -1
-#OFFENCE DEFENCE TODO when ogerpon attack can deal 390 damage, dont use ability
+
 #SETUP TODO change prime catcher score
-#OFFENCE TODO if do switch and active cant switch use prime catcher
 #SETUP TODO used ultra ball before attaching energy to ogerpon (missed ko breakpoint by discarding energy before attaching)
