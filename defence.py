@@ -42,6 +42,7 @@ Prime_Catcher = 1088 # 1
 Forest_of_Vitality = 1261 # 4
 Basic_Grass_Energy = 1 # 14
 Rare_Candy = 1079 # 1
+Energy_Retrieval = 1118 #1
 
 UNNECESSARY = -10000000
 
@@ -849,10 +850,13 @@ def defence_agent(obs_dict: dict) -> list[int]:
                         score += 110
                 else:
                     score = -1
-            elif id == Briar:
-                score = 1000
-                if (my_active is not None and op_active is not None and my_active.id == Ogerpon and op_state.prize == 2 and prize_count(op_active, True) < 2):
-                    score += 700
+            elif id == Energy_Retrieval:
+                score = 2000
+                if hand_counts[Basic_Grass_Energy] < 1 or (hand_counts[Basic_Grass_Energy] < (field_counts[Ogerpon] + field_counts[Hydrapple_Ex]) and is_unused_ability):
+                    if discard_counts[Basic_Grass_Energy] < 2:
+                        score = - 1
+                    else:
+                        score += 500
                 else:
                     score = -1
             elif id == Poke_Pad:
@@ -1206,9 +1210,9 @@ def defence_agent(obs_dict: dict) -> list[int]:
                             score = -1
                         else:
                             score = 5000
-                    elif card.id == Briar:
+                    elif card.id == Energy_Retrieval:
                         if card_score > 0:
-                            score = 1100
+                            score = 2900
                         else:
                             score = -1
                     elif card.id == Bug_Catching_Set:
