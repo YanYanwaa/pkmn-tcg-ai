@@ -1,0 +1,60 @@
+Mega Lucario EX - 678:
+    Fighting Type (Strong against Meowth and Fezandipiti)
+    Mega (1 extra prize)
+    Attack 1 - 1 energy - 130 damage - Attach 3 energy from discard pile to benched pokemon (good energy engine + high damage for cheap cost)
+    Attack 2 - 2 energy - 270 damage - can 1 shot every single pokemon except hydrapple - cant use it twice in a row - extremely high damage and threatening move 
+    Weaknesses: gives 3 prize cards when KO'd
+    Strat: Hydrapple can survive a hit + heal + if team has total of 11 energy can 1 shot or 2HKO with 5 energy across team
+        Ogerpon less useful to KO as lucario only needs 2 energy for attack + retreat
+
+Dragapult EX - 121:
+    Dragon Type
+    Tera (cannot take damage while on bench)
+    Attack 1 - 1 energy - 70 damage
+    Attack 2 - 2 energy(fire + psychic) - 200 damage - deals 10 damage 6 times to any number of benched pokemon (20 damage to one 30 damage to another 10 to another etc)
+    Weakness: Attack 2 passive does not affect Ogerpon(Tera) when on bench
+    Strengths: Can potentially 1 shot every pokemon except hydrapple and ogerpon if damage counters used correctly
+    Strat: ummm idk give ogerpon 4 energy per turn (2xhydrapple ability + ogerpon ability + regular attach) on bench until it has 8 energy and can 1shot)
+
+Mega Starmie EX - 1031:
+    Water Type
+    Mega (1 extra prize)
+    Attack 1 - 1 energy - 120 damage - Deals 50 damage to a benched pokemon
+    Attack 2 - 3 energy - 210 damage - unaffected by weakness/resistance
+    Weaknesses: gives 3 prize cards + Attack 2 expensive
+    Strengths: Attack 2 can 1 shot everyone except hydrapple
+    Strat: Same as Dragapult probably, build up ogerpon to get 7 energy or hydrapple to have 10 across board(hydrapple pref bc ogerpon only has 210 hp)
+
+Mega Abomasnow EX - 723:
+    Water Type
+    Mega (1 extra prize)
+    Attack 1 - 2 energy - 100 damage per water energy discarded by attack
+    Attack 2 - 3 energy - 200  damage - takes 30 less damage next turn
+    Weaknesses: Very high retreat cost (4 energy) and relatively high attack cost + gives 3 prize cards + Attack 1 slightly unreliable + cant reliably 1 shot ogerpon/hydrapple/fezandipiti
+    Strengths: If Attack 1 lucky, can 1 shot any pokemon - 30 damage reduction means attacker needs + 1 energy to KO 
+    Strat: ensure attacker has 1 more energy than needed when attacking (each energy = 30 extra damage)
+
+Makuhita + Hariyama - 673 + 674:
+    Fighting Type
+    ABILITY - when makuhita evolves into hariyama - switch our active with our benched - if see makuhita prepare weak pokemon to retreat
+
+Alakazam - 743:
+    Psychic Type(Takes double damage from fezandipiti)
+    Attack deals 20 damage for each card in op hand - needs 11 cards to OHKO ogerpon 
+    Weaknesses: Fezandipiti can KO Alakazam on bench or in active
+    Strat: Play super aggressive to force op to use cards in their hand + boost fezandipiti usage
+
+Crustle (345) + Sylveon (330):
+    Do not take damage from Ex Pokemon
+    Strat: if crustle or sylveon in play, always keep one dipplin and prefer tapu bulu
+
+Path To the Peak - STADIUM
+
+Arena of antiquity - STADIUM - IF DONT NEED TO EVOLVE POKEMON THIS TURN AND CAN KO WITH 20 MORE DAMAGE, DONT SWITCH
+
+Area Zero - STADIUM 
+
+Peculiar Plaza - STADIUM
+
+ABOMASNOW THREAT = 16
+LUCARIO THREAT = 18

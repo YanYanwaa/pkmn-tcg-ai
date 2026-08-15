@@ -1,0 +1,13 @@
+Noticed Tapu Bulu has very high winrate when played as first card - likely because has very high hp but only gives 1 prize card
+    Meaning buys enough time to set up bench pokemon (ogerpon hydrapple meganium) while not sacrificing many prize cards
+Ogerpon on the other hand has surprisingly low win rate as first card - likely because gives 2 prize cards but requires the most energy to be functional (1 more than hydrapple)
+    Meaning if played first may not be able to deal enough damage before being kod and losing point and energy cards that couldve been used better for setup
+
+Initial offence agent used in tests has 30%-40% average win rate - unsure if due to bad setup as described above or if playing incorrectly - check this
+
+Initial defence agent used in tests has 20%-30% average win rate - expected as does not play for KOs but rather to setup without every switching to more offensive play when threat is lesser
+
+Potential changes:
+    Tone down Ogerpon during setup/when no energy attached
+    Increase setup for tapu bulu or applin if dipplin in hand
+    Encourage dipplin early + if dipplin active play as many basic pokemon as possible - if defensive or no hydrapple available

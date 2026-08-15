@@ -267,7 +267,7 @@ def main_option_proc(obs: Observation, damage: int, bench_attacker: bool):
             plan_b.attack = plan_a.attack
             plan_b.counter = plan_a.counter
             
-def greedy_select_cards(select, obs, hand_counts, hand_score):
+def greedy_select_cards(select, obs, hand_counts, hand_score,deck_counts):
     """Pick up to select.maxCount cards for TO_HAND/TO_BENCH-style contexts,
     re-scoring after each pick so duplicates and diminishing returns are
     handled correctly regardless of option order."""
@@ -292,6 +292,8 @@ def greedy_select_cards(select, obs, hand_counts, hand_score):
         o = select.option[best_i]
         card = get_card(obs, o.area, o.index, o.playerIndex)
         hand_counts[card.id] += 1
+        if o.area == AreaType.DECK:
+            deck_counts[card.id] -= 1
         remaining.pop(best_pos)
     return picked
 
@@ -854,7 +856,7 @@ def agent(obs_dict: dict) -> list[int]:
 
     global use_support
     if context == SelectContext.MAIN:
-        main_option_proc(obs, damage)
+        main_option_proc(obs, damage, bench_attacker)
 
         use_support = 0
         if not state.supporterPlayed:
@@ -1256,7 +1258,7 @@ def agent(obs_dict: dict) -> list[int]:
     if context in (SelectContext.TO_HAND, SelectContext.TO_BENCH) and select.deck is not None:
         # Deck-search style selection (Ultra Ball, Poke Pad, Bug Catching Set,
         # Ciphermaniac's Codebreaking, Lana's Aid, Night Stretcher, Dawn, Celebi's attack...)
-        output = greedy_select_cards(select, obs, hand_counts, hand_score)
+        output = greedy_select_cards(select, obs, hand_counts, hand_score,deck_counts)
     elif len(scores) >= 1:
         sorted_scores = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
         for i in range(select.maxCount):

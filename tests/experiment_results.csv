@@ -1,0 +1,501 @@
+game,defence_agent_reward,defence_agent_status,defence_agent_kos,defence_agent_damage,defence_agent_attacks,defence_agent_opening,main_agent_reward,main_agent_status,main_agent_kos,main_agent_damage,main_agent_attacks,main_agent_opening
+1,-1,DONE,6,1980,6,Teal Mask Ogerpon ex,1,DONE,5,1660,9,Applin
+2,-1,DONE,0,70,7,Chikorita,1,DONE,3,590,7,Applin
+3,-1,DONE,4,600,12,Chikorita,1,DONE,1,330,1,Meowth ex
+4,1,DONE,7,3210,15,Celebi,-1,DONE,6,2120,8,Fezandipiti ex
+5,-1,DONE,2,440,2,Teal Mask Ogerpon ex,1,DONE,7,2730,7,Applin
+6,1,DONE,7,2280,7,Fezandipiti ex,-1,DONE,2,500,5,Celebi
+7,1,DONE,9,2010,9,Teal Mask Ogerpon ex,-1,DONE,0,280,4,Applin
+8,-1,DONE,0,0,3,Teal Mask Ogerpon ex,1,DONE,5,1180,5,Teal Mask Ogerpon ex
+9,-1,DONE,6,1780,18,Chikorita,1,DONE,7,2150,11,Applin
+10,-1,DONE,2,300,2,Teal Mask Ogerpon ex,1,DONE,7,2490,9,Meowth ex
+11,-1,DONE,0,60,3,Applin,1,DONE,1,210,1,Tapu Bulu
+12,1,DONE,7,2130,9,Meowth ex,-1,DONE,0,60,2,Chikorita
+13,1,DONE,1,210,1,Teal Mask Ogerpon ex,-1,DONE,0,30,1,Celebi
+14,1,DONE,5,1630,11,Teal Mask Ogerpon ex,-1,DONE,6,1440,6,Teal Mask Ogerpon ex
+15,1,DONE,3,870,5,Meowth ex,-1,DONE,0,0,0,Chikorita
+16,-1,DONE,0,0,2,Fezandipiti ex,1,DONE,7,3590,9,Applin
+17,-1,DONE,0,0,2,Celebi,1,DONE,1,240,1,Applin
+18,-1,DONE,2,200,6,Meowth ex,1,DONE,7,3050,11,Applin
+19,-1,DONE,0,80,4,Applin,1,DONE,7,2550,9,Teal Mask Ogerpon ex
+20,1,DONE,9,3270,9,Teal Mask Ogerpon ex,-1,DONE,2,1020,4,Applin
+21,1,DONE,7,2130,9,Teal Mask Ogerpon ex,-1,DONE,6,1740,10,Teal Mask Ogerpon ex
+22,1,DONE,9,3180,11,Applin,-1,DONE,0,580,7,Celebi
+23,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,1,270,1,Applin
+24,-1,DONE,0,40,3,Applin,1,DONE,3,520,3,Applin
+25,-1,DONE,2,720,6,Applin,1,DONE,7,1950,11,Applin
+26,-1,DONE,6,2220,18,Teal Mask Ogerpon ex,1,DONE,7,2490,9,Teal Mask Ogerpon ex
+27,-1,DONE,0,0,0,Meowth ex,1,DONE,0,150,3,Applin
+28,1,DONE,5,1560,5,Teal Mask Ogerpon ex,-1,DONE,2,360,2,Teal Mask Ogerpon ex
+29,-1,DONE,2,360,6,Teal Mask Ogerpon ex,1,DONE,7,2990,11,Celebi
+30,-1,DONE,2,540,6,Teal Mask Ogerpon ex,1,DONE,7,2330,7,Tapu Bulu
+31,1,DONE,7,1930,15,Chikorita,-1,DONE,6,2260,8,Meowth ex
+32,-1,DONE,2,320,7,Teal Mask Ogerpon ex,1,DONE,9,2510,11,Chikorita
+33,-1,DONE,2,560,11,Chikorita,1,DONE,9,2210,11,Celebi
+34,1,DONE,5,1230,5,Teal Mask Ogerpon ex,-1,DONE,0,80,2,Celebi
+35,-1,DONE,0,0,2,Teal Mask Ogerpon ex,1,DONE,7,2570,9,Teal Mask Ogerpon ex
+36,-1,DONE,0,60,2,Tapu Bulu,1,DONE,9,3510,9,Meowth ex
+37,-1,DONE,2,700,4,Fezandipiti ex,1,DONE,9,2700,13,Teal Mask Ogerpon ex
+38,1,DONE,1,210,1,Fezandipiti ex,-1,DONE,0,30,1,Chikorita
+39,1,DONE,7,2290,11,Celebi,-1,DONE,2,1020,8,Celebi
+40,-1,DONE,2,420,2,Teal Mask Ogerpon ex,1,DONE,7,3480,7,Fezandipiti ex
+41,1,DONE,7,3630,13,Teal Mask Ogerpon ex,-1,DONE,0,90,3,Celebi
+42,-1,DONE,2,240,3,Tapu Bulu,1,DONE,7,2530,7,Teal Mask Ogerpon ex
+43,1,DONE,7,1830,7,Teal Mask Ogerpon ex,-1,DONE,0,360,2,Meowth ex
+44,-1,DONE,0,0,0,Celebi,1,DONE,3,270,3,Chikorita
+45,1,DONE,7,1680,7,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Meowth ex
+46,-1,DONE,8,2100,14,Teal Mask Ogerpon ex,1,DONE,7,1700,13,Applin
+47,-1,DONE,4,580,7,Applin,1,DONE,5,1440,5,Tapu Bulu
+48,-1,DONE,2,720,5,Teal Mask Ogerpon ex,1,DONE,9,3100,9,Celebi
+49,1,DONE,7,2990,7,Tapu Bulu,-1,DONE,8,2950,11,Applin
+50,1,DONE,7,1650,7,Teal Mask Ogerpon ex,-1,DONE,0,60,2,Celebi
+51,1,DONE,7,2530,15,Applin,-1,DONE,0,0,0,Tapu Bulu
+52,1,DONE,8,3220,14,Celebi,-1,DONE,6,1500,6,Teal Mask Ogerpon ex
+53,-1,DONE,0,160,2,Applin,1,DONE,9,4050,11,Teal Mask Ogerpon ex
+54,1,DONE,7,3300,13,Teal Mask Ogerpon ex,-1,DONE,6,3360,8,Meowth ex
+55,-1,DONE,4,1740,20,Applin,1,DONE,9,4050,9,Applin
+56,1,DONE,3,840,3,Teal Mask Ogerpon ex,-1,DONE,2,600,2,Fezandipiti ex
+57,-1,DONE,2,1050,2,Meowth ex,1,DONE,7,1840,7,Chikorita
+58,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,3,510,3,Teal Mask Ogerpon ex
+59,-1,DONE,0,120,3,Meowth ex,1,DONE,7,2290,7,Celebi
+60,-1,DONE,0,40,3,Tapu Bulu,1,DONE,5,1150,7,Applin
+61,-1,DONE,4,680,8,Applin,1,DONE,7,1970,9,Fezandipiti ex
+62,1,DONE,3,630,3,Teal Mask Ogerpon ex,-1,DONE,0,60,2,Celebi
+63,1,DONE,7,4350,9,Teal Mask Ogerpon ex,-1,DONE,0,40,2,Meowth ex
+64,-1,DONE,2,720,10,Celebi,1,DONE,9,5700,9,Fezandipiti ex
+65,1,DONE,1,210,1,Applin,-1,DONE,0,0,0,Teal Mask Ogerpon ex
+66,1,DONE,7,1510,9,Applin,-1,DONE,2,840,6,Chikorita
+67,1,DONE,1,180,1,Fezandipiti ex,-1,DONE,0,20,1,Applin
+68,-1,DONE,0,440,14,Meowth ex,1,DONE,1,390,3,Tapu Bulu
+69,-1,DONE,2,720,12,Applin,1,DONE,9,2530,9,Chikorita
+70,-1,DONE,2,380,14,Applin,1,DONE,9,4740,9,Applin
+71,-1,DONE,0,180,5,Applin,1,DONE,9,4140,11,Meowth ex
+72,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,1,270,1,Applin
+73,1,DONE,7,2310,7,Chikorita,-1,DONE,0,60,2,Celebi
+74,-1,DONE,0,40,4,Chikorita,1,DONE,3,1230,3,Chikorita
+75,1,DONE,5,1410,9,Celebi,-1,DONE,0,120,4,Celebi
+76,-1,DONE,6,1200,6,Teal Mask Ogerpon ex,1,DONE,7,3340,9,Applin
+77,-1,DONE,2,360,2,Teal Mask Ogerpon ex,1,DONE,1,450,3,Celebi
+78,1,DONE,5,1980,7,Applin,-1,DONE,4,980,6,Teal Mask Ogerpon ex
+79,-1,DONE,4,1080,10,Celebi,1,DONE,7,2130,9,Meowth ex
+80,-1,DONE,0,0,0,Meowth ex,1,DONE,5,1500,7,Teal Mask Ogerpon ex
+81,1,DONE,7,1500,9,Tapu Bulu,-1,DONE,2,450,2,Chikorita
+82,-1,DONE,0,0,2,Meowth ex,1,DONE,3,1160,5,Meowth ex
+83,-1,DONE,2,400,4,Fezandipiti ex,1,DONE,7,1770,11,Celebi
+84,-1,DONE,4,1870,9,Chikorita,1,DONE,7,1530,7,Meowth ex
+85,-1,DONE,6,2700,12,Chikorita,1,DONE,7,2970,9,Meowth ex
+86,-1,DONE,0,0,0,Meowth ex,1,DONE,1,690,3,Applin
+87,-1,DONE,0,300,2,Teal Mask Ogerpon ex,1,DONE,7,2250,7,Meowth ex
+88,1,DONE,3,870,3,Tapu Bulu,-1,DONE,0,110,5,Applin
+89,-1,DONE,6,2450,7,Tapu Bulu,1,DONE,7,3630,7,Tapu Bulu
+90,1,DONE,7,2550,9,Chikorita,-1,DONE,0,40,4,Applin
+91,1,DONE,3,390,3,Meowth ex,-1,DONE,0,40,2,Applin
+92,-1,DONE,0,20,1,Meowth ex,1,DONE,3,1320,3,Celebi
+93,1,DONE,7,1620,7,Teal Mask Ogerpon ex,-1,DONE,0,80,4,Applin
+94,-1,DONE,2,660,4,Teal Mask Ogerpon ex,1,DONE,5,1520,7,Teal Mask Ogerpon ex
+95,-1,DONE,6,2520,13,Celebi,1,DONE,9,3730,11,Fezandipiti ex
+96,-1,DONE,2,960,2,Fezandipiti ex,1,DONE,9,4530,11,Tapu Bulu
+97,-1,DONE,0,0,2,Teal Mask Ogerpon ex,1,DONE,9,1460,15,Fezandipiti ex
+98,-1,DONE,0,100,2,Fezandipiti ex,1,DONE,1,660,3,Teal Mask Ogerpon ex
+99,-1,DONE,0,0,0,Meowth ex,1,DONE,3,750,3,Applin
+100,-1,DONE,4,1000,5,Fezandipiti ex,1,DONE,7,1860,7,Celebi
+101,-1,DONE,0,0,0,Fezandipiti ex,1,DONE,1,450,1,Applin
+102,-1,DONE,4,1500,4,Teal Mask Ogerpon ex,1,DONE,7,2890,11,Applin
+103,-1,DONE,2,360,2,Teal Mask Ogerpon ex,1,DONE,1,420,3,Applin
+104,-1,DONE,4,1230,7,Teal Mask Ogerpon ex,1,DONE,7,1490,7,Teal Mask Ogerpon ex
+105,1,DONE,7,4950,17,Chikorita,-1,DONE,0,0,0,Meowth ex
+106,-1,DONE,6,1320,8,Teal Mask Ogerpon ex,1,DONE,7,1910,7,Fezandipiti ex
+107,-1,DONE,0,0,2,Meowth ex,1,DONE,5,2090,9,Applin
+108,1,DONE,7,2200,9,Meowth ex,-1,DONE,4,1950,4,Meowth ex
+109,-1,DONE,4,1920,12,Applin,1,DONE,9,3470,11,Meowth ex
+110,1,DONE,5,1290,7,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Tapu Bulu
+111,-1,DONE,6,1760,6,Tapu Bulu,1,DONE,9,3390,13,Celebi
+112,1,DONE,5,2370,9,Fezandipiti ex,-1,DONE,4,1650,7,Teal Mask Ogerpon ex
+113,1,DONE,7,1660,7,Teal Mask Ogerpon ex,-1,DONE,0,30,0,Celebi
+114,-1,DONE,0,0,2,Chikorita,1,DONE,5,1110,5,Celebi
+115,-1,DONE,6,2300,12,Celebi,1,DONE,7,3450,7,Chikorita
+116,1,DONE,7,2310,11,Celebi,-1,DONE,0,0,0,Fezandipiti ex
+117,-1,DONE,0,0,4,Meowth ex,1,DONE,7,2890,9,Celebi
+118,1,DONE,7,3030,11,Meowth ex,-1,DONE,0,80,4,Applin
+119,-1,DONE,6,2600,12,Fezandipiti ex,1,DONE,7,2370,7,Fezandipiti ex
+120,-1,DONE,0,0,0,Meowth ex,1,DONE,1,300,3,Applin
+121,-1,DONE,2,940,16,Applin,1,DONE,9,2050,9,Tapu Bulu
+122,1,DONE,7,2370,7,Meowth ex,-1,DONE,0,160,6,Fezandipiti ex
+123,1,DONE,7,3210,17,Celebi,-1,DONE,6,2160,8,Celebi
+124,1,DONE,5,2010,11,Celebi,-1,DONE,6,2040,8,Teal Mask Ogerpon ex
+125,-1,DONE,0,620,6,Meowth ex,1,DONE,7,3810,9,Applin
+126,1,DONE,7,2880,9,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Meowth ex
+127,-1,DONE,6,1620,10,Meowth ex,1,DONE,7,3330,11,Celebi
+128,-1,DONE,0,20,1,Tapu Bulu,1,DONE,3,450,3,Teal Mask Ogerpon ex
+129,-1,DONE,2,420,2,Teal Mask Ogerpon ex,1,DONE,7,2610,9,Applin
+130,1,DONE,7,2370,11,Applin,-1,DONE,2,720,2,Tapu Bulu
+131,-1,DONE,6,2040,8,Teal Mask Ogerpon ex,1,DONE,5,2310,13,Celebi
+132,-1,DONE,4,1060,16,Chikorita,1,DONE,9,3310,13,Applin
+133,1,DONE,5,1500,5,Teal Mask Ogerpon ex,-1,DONE,0,40,2,Fezandipiti ex
+134,-1,DONE,2,380,3,Teal Mask Ogerpon ex,1,DONE,7,2670,9,Chikorita
+135,1,DONE,9,4470,15,Celebi,-1,DONE,2,570,11,Celebi
+136,1,DONE,5,1550,13,Celebi,-1,DONE,4,1500,6,Chikorita
+137,-1,DONE,0,150,1,Tapu Bulu,1,DONE,7,1600,11,Chikorita
+138,-1,DONE,0,0,0,Meowth ex,1,DONE,7,2200,11,Applin
+139,1,DONE,7,1910,7,Teal Mask Ogerpon ex,-1,DONE,2,840,2,Chikorita
+140,-1,DONE,2,280,4,Chikorita,1,DONE,1,240,3,Applin
+141,-1,DONE,6,1480,10,Teal Mask Ogerpon ex,1,DONE,7,2770,9,Applin
+142,1,DONE,5,2010,7,Teal Mask Ogerpon ex,-1,DONE,4,420,4,Celebi
+143,1,DONE,7,2430,7,Teal Mask Ogerpon ex,-1,DONE,0,160,4,Applin
+144,-1,DONE,4,1460,18,Celebi,1,DONE,9,3630,9,Teal Mask Ogerpon ex
+145,1,DONE,7,3030,13,Chikorita,-1,DONE,6,2400,8,Chikorita
+146,1,DONE,7,1550,11,Applin,-1,DONE,4,1660,8,Celebi
+147,1,DONE,7,2390,13,Meowth ex,-1,DONE,8,2200,12,Meowth ex
+148,-1,DONE,0,0,0,Meowth ex,1,DONE,4,600,4,Celebi
+149,1,DONE,9,2910,9,Teal Mask Ogerpon ex,-1,DONE,0,80,4,Chikorita
+150,-1,DONE,4,1080,9,Teal Mask Ogerpon ex,1,DONE,7,2330,9,Meowth ex
+151,-1,DONE,6,1680,10,Chikorita,1,DONE,7,1650,7,Chikorita
+152,1,DONE,5,1650,9,Teal Mask Ogerpon ex,-1,DONE,8,2000,12,Applin
+153,1,DONE,7,1750,9,Chikorita,-1,DONE,0,200,4,Applin
+154,-1,DONE,2,520,6,Celebi,1,DONE,7,3270,11,Applin
+155,-1,DONE,0,0,1,Chikorita,1,DONE,1,150,1,Applin
+156,-1,DONE,0,0,0,Meowth ex,1,DONE,7,3590,13,Applin
+157,1,DONE,9,2490,19,Fezandipiti ex,-1,DONE,0,0,0,Tapu Bulu
+158,1,DONE,7,2160,7,Meowth ex,-1,DONE,2,630,3,Applin
+159,1,DONE,5,1260,5,Teal Mask Ogerpon ex,-1,DONE,2,240,2,Meowth ex
+160,-1,DONE,4,780,4,Teal Mask Ogerpon ex,1,DONE,9,3390,9,Tapu Bulu
+161,1,DONE,5,1830,9,Tapu Bulu,-1,DONE,0,240,2,Celebi
+162,-1,DONE,0,0,5,Celebi,1,DONE,7,1680,7,Applin
+163,-1,DONE,0,0,0,Meowth ex,1,DONE,5,1470,5,Chikorita
+164,-1,DONE,0,160,4,Tapu Bulu,1,DONE,7,2490,7,Fezandipiti ex
+165,-1,DONE,2,370,8,Chikorita,1,DONE,5,1520,11,Applin
+166,1,DONE,5,1770,5,Teal Mask Ogerpon ex,-1,DONE,4,1440,8,Chikorita
+167,1,DONE,7,1870,11,Teal Mask Ogerpon ex,-1,DONE,4,1620,12,Chikorita
+168,1,DONE,7,1610,9,Meowth ex,-1,DONE,6,1320,6,Tapu Bulu
+169,-1,DONE,0,60,7,Applin,1,DONE,9,2920,9,Fezandipiti ex
+170,-1,DONE,6,1800,8,Teal Mask Ogerpon ex,1,DONE,7,2510,9,Celebi
+171,1,DONE,7,1770,7,Tapu Bulu,-1,DONE,2,1260,8,Applin
+172,-1,DONE,0,160,4,Meowth ex,1,DONE,9,2310,13,Meowth ex
+173,-1,DONE,0,0,0,Meowth ex,1,DONE,7,1710,7,Teal Mask Ogerpon ex
+174,1,DONE,7,2040,7,Fezandipiti ex,-1,DONE,2,280,2,Meowth ex
+175,1,DONE,7,2250,9,Celebi,-1,DONE,2,360,2,Teal Mask Ogerpon ex
+176,-1,DONE,4,1920,6,Meowth ex,1,DONE,9,2850,9,Chikorita
+177,-1,DONE,6,2220,10,Meowth ex,1,DONE,5,2520,13,Celebi
+178,1,DONE,7,1850,9,Teal Mask Ogerpon ex,-1,DONE,6,1620,8,Meowth ex
+179,-1,DONE,0,150,5,Chikorita,1,DONE,7,2280,15,Chikorita
+180,1,DONE,7,2390,7,Teal Mask Ogerpon ex,-1,DONE,4,1320,4,Tapu Bulu
+181,-1,DONE,4,1780,12,Fezandipiti ex,1,DONE,9,3230,11,Applin
+182,1,DONE,3,510,3,Teal Mask Ogerpon ex,-1,DONE,0,80,3,Celebi
+183,1,DONE,5,2510,9,Teal Mask Ogerpon ex,-1,DONE,0,420,2,Fezandipiti ex
+184,1,DONE,7,2040,7,Teal Mask Ogerpon ex,-1,DONE,2,300,3,Meowth ex
+185,-1,DONE,0,0,0,Tapu Bulu,1,DONE,7,1440,7,Meowth ex
+186,-1,DONE,0,0,1,Chikorita,1,DONE,1,160,1,Teal Mask Ogerpon ex
+187,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,5,1140,7,Teal Mask Ogerpon ex
+188,-1,DONE,2,1010,9,Celebi,1,DONE,9,4310,9,Applin
+189,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,9,2110,11,Chikorita
+190,-1,DONE,0,0,2,Celebi,1,DONE,9,1590,9,Applin
+191,-1,DONE,6,1620,6,Chikorita,1,DONE,7,2890,19,Chikorita
+192,-1,DONE,2,960,19,Applin,1,DONE,7,1830,9,Applin
+193,-1,DONE,4,1140,16,Meowth ex,1,DONE,7,3390,7,Tapu Bulu
+194,-1,DONE,0,120,10,Applin,1,DONE,7,2010,9,Fezandipiti ex
+195,-1,DONE,2,800,10,Chikorita,1,DONE,3,600,5,Tapu Bulu
+196,-1,DONE,4,1440,4,Tapu Bulu,1,DONE,5,1750,7,Celebi
+197,1,DONE,5,2610,9,Celebi,-1,DONE,2,690,7,Celebi
+198,1,DONE,1,210,5,Celebi,-1,DONE,0,0,0,Chikorita
+199,1,DONE,7,4710,11,Celebi,-1,DONE,0,60,1,Applin
+200,1,DONE,5,2970,11,Celebi,-1,DONE,4,1440,4,Meowth ex
+201,1,DONE,3,560,3,Chikorita,-1,DONE,0,0,2,Meowth ex
+202,1,DONE,5,2670,5,Teal Mask Ogerpon ex,-1,DONE,0,120,2,Meowth ex
+203,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,7,2730,7,Meowth ex
+204,-1,DONE,2,240,2,Chikorita,1,DONE,7,2790,11,Celebi
+205,1,DONE,7,1630,9,Applin,-1,DONE,0,520,4,Meowth ex
+206,-1,DONE,0,0,0,Meowth ex,1,DONE,9,3030,9,Teal Mask Ogerpon ex
+207,-1,DONE,4,900,12,Fezandipiti ex,1,DONE,9,4500,17,Applin
+208,-1,DONE,4,1560,16,Chikorita,1,DONE,7,5010,7,Chikorita
+209,-1,DONE,2,280,8,Meowth ex,1,DONE,9,3150,9,Teal Mask Ogerpon ex
+210,1,DONE,5,1400,5,Teal Mask Ogerpon ex,-1,DONE,0,30,3,Chikorita
+211,-1,DONE,4,1200,22,Celebi,1,DONE,7,3270,7,Meowth ex
+212,-1,DONE,0,620,9,Applin,1,DONE,7,2230,9,Fezandipiti ex
+213,-1,DONE,2,860,6,Meowth ex,1,DONE,9,2780,11,Applin
+214,-1,DONE,2,940,26,Celebi,1,DONE,9,5150,11,Fezandipiti ex
+215,-1,DONE,0,0,3,Teal Mask Ogerpon ex,1,DONE,7,2800,9,Applin
+216,-1,DONE,0,30,4,Chikorita,1,DONE,7,1720,7,Meowth ex
+217,-1,DONE,2,240,2,Teal Mask Ogerpon ex,1,DONE,5,1830,5,Meowth ex
+218,-1,DONE,6,1640,11,Teal Mask Ogerpon ex,1,DONE,7,1630,9,Chikorita
+219,1,DONE,7,1750,7,Tapu Bulu,-1,DONE,4,1080,4,Fezandipiti ex
+220,-1,DONE,0,60,3,Applin,1,DONE,1,90,3,Celebi
+221,1,DONE,7,1690,11,Applin,-1,DONE,2,720,4,Teal Mask Ogerpon ex
+222,1,DONE,7,1980,9,Applin,-1,DONE,0,0,2,Chikorita
+223,1,DONE,5,2050,15,Chikorita,-1,DONE,8,3900,14,Applin
+224,1,DONE,5,2430,9,Meowth ex,-1,DONE,2,840,2,Meowth ex
+225,1,DONE,5,1930,19,Applin,-1,DONE,10,3300,12,Meowth ex
+226,1,DONE,9,3850,11,Applin,-1,DONE,4,2140,10,Celebi
+227,1,DONE,5,1650,11,Celebi,-1,DONE,4,960,7,Teal Mask Ogerpon ex
+228,-1,DONE,0,0,0,Meowth ex,1,DONE,3,690,3,Celebi
+229,-1,DONE,0,80,1,Teal Mask Ogerpon ex,1,DONE,7,1710,11,Applin
+230,-1,DONE,6,1420,6,Tapu Bulu,1,DONE,7,3030,9,Chikorita
+231,1,DONE,1,270,1,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Teal Mask Ogerpon ex
+232,-1,DONE,8,1460,16,Applin,1,DONE,7,3070,11,Applin
+233,1,DONE,7,1320,7,Teal Mask Ogerpon ex,-1,DONE,0,90,0,Chikorita
+234,1,DONE,7,2370,7,Teal Mask Ogerpon ex,-1,DONE,0,630,7,Chikorita
+235,-1,DONE,2,980,15,Applin,1,DONE,9,3270,9,Tapu Bulu
+236,1,DONE,7,2010,9,Chikorita,-1,DONE,6,2040,8,Applin
+237,1,DONE,5,2730,11,Applin,-1,DONE,0,480,2,Teal Mask Ogerpon ex
+238,1,DONE,3,990,3,Teal Mask Ogerpon ex,-1,DONE,0,90,1,Fezandipiti ex
+239,-1,DONE,0,30,3,Chikorita,1,DONE,3,440,3,Teal Mask Ogerpon ex
+240,1,DONE,5,2370,11,Celebi,-1,DONE,6,1320,6,Tapu Bulu
+241,1,DONE,1,210,1,Teal Mask Ogerpon ex,-1,DONE,0,30,1,Celebi
+242,-1,DONE,0,180,1,Teal Mask Ogerpon ex,1,DONE,7,3510,9,Chikorita
+243,1,DONE,0,0,3,Chikorita,-1,DONE,0,0,0,Meowth ex
+244,-1,DONE,2,560,5,Teal Mask Ogerpon ex,1,DONE,7,2550,13,Applin
+245,-1,DONE,2,200,2,Fezandipiti ex,1,DONE,1,370,5,Applin
+246,-1,DONE,0,200,8,Celebi,1,DONE,9,2250,9,Chikorita
+247,-1,DONE,2,240,5,Chikorita,1,DONE,5,2640,7,Celebi
+248,-1,DONE,0,0,5,Celebi,1,DONE,9,1890,9,Teal Mask Ogerpon ex
+249,-1,DONE,4,1370,6,Teal Mask Ogerpon ex,1,DONE,7,2380,7,Teal Mask Ogerpon ex
+250,1,DONE,7,1920,9,Teal Mask Ogerpon ex,-1,DONE,0,30,1,Fezandipiti ex
+251,1,DONE,5,1410,7,Teal Mask Ogerpon ex,-1,DONE,2,420,2,Meowth ex
+252,-1,DONE,2,760,8,Teal Mask Ogerpon ex,1,DONE,7,3870,9,Teal Mask Ogerpon ex
+253,-1,DONE,4,1080,4,Teal Mask Ogerpon ex,1,DONE,7,3090,7,Chikorita
+254,1,DONE,7,1710,9,Celebi,-1,DONE,8,1440,9,Teal Mask Ogerpon ex
+255,-1,DONE,0,0,4,Chikorita,1,DONE,3,530,5,Chikorita
+256,1,DONE,7,2270,13,Teal Mask Ogerpon ex,-1,DONE,6,2320,8,Fezandipiti ex
+257,1,DONE,7,3930,7,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Applin
+258,1,DONE,5,2190,5,Teal Mask Ogerpon ex,-1,DONE,2,1320,4,Applin
+259,-1,DONE,0,0,0,Meowth ex,1,DONE,9,2340,11,Meowth ex
+260,1,DONE,5,2750,7,Teal Mask Ogerpon ex,-1,DONE,0,420,2,Teal Mask Ogerpon ex
+261,1,DONE,3,990,3,Chikorita,-1,DONE,0,180,6,Meowth ex
+262,-1,DONE,4,1200,4,Teal Mask Ogerpon ex,1,DONE,3,940,5,Applin
+263,1,DONE,5,2970,9,Tapu Bulu,-1,DONE,6,3780,6,Meowth ex
+264,-1,DONE,2,990,5,Chikorita,1,DONE,7,2070,7,Chikorita
+265,-1,DONE,2,620,4,Meowth ex,1,DONE,7,2050,11,Applin
+266,1,DONE,7,3510,11,Teal Mask Ogerpon ex,-1,DONE,4,1040,6,Teal Mask Ogerpon ex
+267,-1,DONE,2,720,4,Fezandipiti ex,1,DONE,7,3270,11,Applin
+268,-1,DONE,4,1320,6,Celebi,1,DONE,9,2290,11,Applin
+269,-1,DONE,0,320,8,Meowth ex,1,DONE,7,2740,9,Celebi
+270,1,DONE,3,1330,5,Applin,-1,DONE,2,1030,7,Applin
+271,1,DONE,5,1470,7,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Meowth ex
+272,-1,DONE,2,270,11,Chikorita,1,DONE,3,1210,7,Chikorita
+273,-1,DONE,0,280,10,Applin,1,DONE,9,2250,11,Celebi
+274,1,DONE,7,2130,7,Teal Mask Ogerpon ex,-1,DONE,0,40,2,Applin
+275,-1,DONE,0,460,18,Applin,1,DONE,9,3350,9,Fezandipiti ex
+276,-1,DONE,2,420,2,Teal Mask Ogerpon ex,1,DONE,7,1740,7,Celebi
+277,-1,DONE,6,1860,10,Teal Mask Ogerpon ex,1,DONE,7,2790,13,Celebi
+278,1,DONE,7,3690,9,Meowth ex,-1,DONE,2,780,8,Applin
+279,-1,DONE,4,1040,6,Chikorita,1,DONE,7,1890,7,Teal Mask Ogerpon ex
+280,-1,DONE,0,0,0,Chikorita,1,DONE,11,5850,13,Teal Mask Ogerpon ex
+281,1,DONE,9,2850,9,Chikorita,-1,DONE,0,100,4,Celebi
+282,1,DONE,5,1180,9,Applin,-1,DONE,4,1590,6,Chikorita
+283,-1,DONE,0,0,0,Fezandipiti ex,1,DONE,7,1840,15,Celebi
+284,-1,DONE,0,120,2,Meowth ex,1,DONE,3,600,3,Applin
+285,-1,DONE,2,870,9,Celebi,1,DONE,7,2730,7,Applin
+286,-1,DONE,6,1400,14,Fezandipiti ex,1,DONE,7,3310,15,Applin
+287,1,DONE,7,3310,11,Teal Mask Ogerpon ex,-1,DONE,4,2100,6,Celebi
+288,-1,DONE,0,40,2,Teal Mask Ogerpon ex,1,DONE,7,1330,13,Applin
+289,1,DONE,7,2670,7,Teal Mask Ogerpon ex,-1,DONE,0,300,2,Applin
+290,1,DONE,7,3900,13,Chikorita,-1,DONE,2,120,8,Celebi
+291,-1,DONE,0,0,2,Tapu Bulu,1,DONE,3,540,3,Meowth ex
+292,-1,DONE,2,630,16,Teal Mask Ogerpon ex,1,DONE,7,2460,7,Teal Mask Ogerpon ex
+293,-1,DONE,2,540,6,Celebi,1,DONE,7,3070,9,Tapu Bulu
+294,-1,DONE,4,1140,6,Teal Mask Ogerpon ex,1,DONE,7,2370,9,Celebi
+295,1,DONE,5,1530,5,Teal Mask Ogerpon ex,-1,DONE,0,380,6,Applin
+296,1,DONE,7,2170,11,Meowth ex,-1,DONE,0,40,1,Fezandipiti ex
+297,1,DONE,7,2450,23,Teal Mask Ogerpon ex,-1,DONE,2,320,4,Chikorita
+298,-1,DONE,8,1960,21,Tapu Bulu,1,DONE,7,3710,11,Celebi
+299,1,DONE,5,2310,7,Celebi,-1,DONE,6,2190,7,Chikorita
+300,-1,DONE,6,1540,10,Teal Mask Ogerpon ex,1,DONE,7,2970,11,Applin
+301,1,DONE,9,2790,15,Meowth ex,-1,DONE,2,560,10,Applin
+302,-1,DONE,0,30,3,Chikorita,1,DONE,1,80,3,Celebi
+303,-1,DONE,4,880,10,Fezandipiti ex,1,DONE,7,2030,7,Fezandipiti ex
+304,1,DONE,9,2490,13,Chikorita,-1,DONE,2,660,2,Tapu Bulu
+305,-1,DONE,0,0,0,Meowth ex,1,DONE,7,2250,9,Teal Mask Ogerpon ex
+306,1,DONE,7,2690,7,Fezandipiti ex,-1,DONE,2,900,2,Tapu Bulu
+307,-1,DONE,4,2400,4,Meowth ex,1,DONE,7,3570,7,Teal Mask Ogerpon ex
+308,-1,DONE,0,0,0,Meowth ex,1,DONE,1,480,3,Meowth ex
+309,-1,DONE,0,40,5,Applin,1,DONE,1,150,5,Celebi
+310,-1,DONE,4,1460,5,Tapu Bulu,1,DONE,9,2220,9,Teal Mask Ogerpon ex
+311,-1,DONE,4,2150,9,Teal Mask Ogerpon ex,1,DONE,7,2850,11,Tapu Bulu
+312,-1,DONE,0,0,0,Meowth ex,1,DONE,0,0,0,Meowth ex
+313,-1,DONE,0,0,1,Tapu Bulu,1,DONE,3,580,3,Teal Mask Ogerpon ex
+314,1,DONE,5,3330,13,Celebi,-1,DONE,0,510,3,Applin
+315,-1,DONE,2,540,2,Meowth ex,1,DONE,9,3870,15,Chikorita
+316,1,DONE,5,1570,11,Teal Mask Ogerpon ex,-1,DONE,6,720,14,Applin
+317,1,DONE,7,2130,15,Celebi,-1,DONE,8,3240,10,Teal Mask Ogerpon ex
+318,-1,DONE,0,0,0,Tapu Bulu,1,DONE,1,180,1,Teal Mask Ogerpon ex
+319,-1,DONE,2,620,8,Celebi,1,DONE,9,2290,11,Applin
+320,1,DONE,7,1690,11,Chikorita,-1,DONE,2,1260,4,Meowth ex
+321,1,DONE,7,3510,9,Chikorita,-1,DONE,0,540,6,Applin
+322,1,DONE,7,2490,13,Celebi,-1,DONE,4,1180,6,Fezandipiti ex
+323,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,3,840,3,Teal Mask Ogerpon ex
+324,-1,DONE,0,40,2,Applin,1,DONE,7,2100,11,Teal Mask Ogerpon ex
+325,1,DONE,7,2430,23,Celebi,-1,DONE,2,1080,4,Meowth ex
+326,1,DONE,3,1530,7,Celebi,-1,DONE,0,40,6,Applin
+327,-1,DONE,2,240,2,Teal Mask Ogerpon ex,1,DONE,7,1920,7,Teal Mask Ogerpon ex
+328,-1,DONE,4,740,7,Applin,1,DONE,5,1420,9,Applin
+329,-1,DONE,0,120,2,Meowth ex,1,DONE,7,2050,9,Applin
+330,-1,DONE,4,1020,30,Chikorita,1,DONE,7,4110,7,Fezandipiti ex
+331,1,DONE,7,1990,9,Applin,-1,DONE,4,1560,4,Teal Mask Ogerpon ex
+332,-1,DONE,2,540,2,Teal Mask Ogerpon ex,1,DONE,7,2490,9,Applin
+333,-1,DONE,0,20,3,Chikorita,1,DONE,9,2090,9,Applin
+334,-1,DONE,2,760,4,Fezandipiti ex,1,DONE,7,1650,7,Tapu Bulu
+335,-1,DONE,4,500,4,Meowth ex,1,DONE,7,1980,7,Applin
+336,-1,DONE,4,720,12,Chikorita,1,DONE,7,2340,7,Applin
+337,-1,DONE,4,1080,6,Teal Mask Ogerpon ex,1,DONE,7,3210,11,Fezandipiti ex
+338,-1,DONE,6,1500,10,Meowth ex,1,DONE,9,3210,11,Fezandipiti ex
+339,-1,DONE,0,0,2,Chikorita,1,DONE,7,2100,7,Chikorita
+340,-1,DONE,4,1030,12,Teal Mask Ogerpon ex,1,DONE,9,2340,27,Chikorita
+341,-1,DONE,2,780,6,Teal Mask Ogerpon ex,1,DONE,7,2050,13,Celebi
+342,1,DONE,3,930,5,Teal Mask Ogerpon ex,-1,DONE,0,120,2,Meowth ex
+343,-1,DONE,2,500,3,Teal Mask Ogerpon ex,1,DONE,7,1800,9,Meowth ex
+344,-1,DONE,2,620,3,Teal Mask Ogerpon ex,1,DONE,3,900,5,Celebi
+345,1,DONE,7,2370,7,Chikorita,-1,DONE,2,420,4,Meowth ex
+346,1,DONE,9,2330,11,Celebi,-1,DONE,2,1200,10,Applin
+347,-1,DONE,0,0,0,Tapu Bulu,1,DONE,1,210,1,Teal Mask Ogerpon ex
+348,-1,DONE,2,900,10,Meowth ex,1,DONE,7,2910,7,Chikorita
+349,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,1,210,1,Teal Mask Ogerpon ex
+350,1,DONE,7,1810,15,Teal Mask Ogerpon ex,-1,DONE,6,2160,9,Celebi
+351,-1,DONE,2,680,9,Chikorita,1,DONE,7,3090,7,Fezandipiti ex
+352,-1,DONE,4,900,5,Meowth ex,1,DONE,7,2110,11,Applin
+353,1,DONE,1,200,3,Fezandipiti ex,-1,DONE,0,150,3,Chikorita
+354,-1,DONE,2,840,4,Tapu Bulu,1,DONE,9,4350,9,Tapu Bulu
+355,1,DONE,3,660,3,Tapu Bulu,-1,DONE,0,150,2,Celebi
+356,1,DONE,7,2010,9,Chikorita,-1,DONE,8,1920,8,Applin
+357,-1,DONE,2,660,6,Teal Mask Ogerpon ex,1,DONE,9,2340,9,Celebi
+358,-1,DONE,8,3200,14,Celebi,1,DONE,7,2290,7,Tapu Bulu
+359,1,DONE,5,1100,5,Tapu Bulu,-1,DONE,0,150,0,Fezandipiti ex
+360,-1,DONE,0,0,0,Tapu Bulu,1,DONE,7,2970,11,Meowth ex
+361,-1,DONE,0,0,0,Meowth ex,1,DONE,0,0,0,Applin
+362,1,DONE,5,1890,7,Teal Mask Ogerpon ex,-1,DONE,4,1080,4,Meowth ex
+363,-1,DONE,0,160,5,Meowth ex,1,DONE,7,1720,11,Fezandipiti ex
+364,1,DONE,7,1420,11,Chikorita,-1,DONE,0,110,8,Applin
+365,-1,DONE,2,80,4,Applin,1,DONE,1,240,1,Applin
+366,1,DONE,7,2610,9,Meowth ex,-1,DONE,6,2040,6,Chikorita
+367,1,DONE,9,3150,19,Applin,-1,DONE,4,1210,7,Celebi
+368,-1,DONE,0,210,1,Meowth ex,1,DONE,9,3330,27,Applin
+369,-1,DONE,4,1560,4,Teal Mask Ogerpon ex,1,DONE,5,1830,7,Chikorita
+370,-1,DONE,0,0,2,Celebi,1,DONE,1,90,1,Applin
+371,1,DONE,7,1540,7,Tapu Bulu,-1,DONE,0,210,0,Meowth ex
+372,-1,DONE,2,360,2,Teal Mask Ogerpon ex,1,DONE,1,270,1,Meowth ex
+373,1,DONE,7,2040,7,Teal Mask Ogerpon ex,-1,DONE,4,660,4,Applin
+374,-1,DONE,6,1060,6,Tapu Bulu,1,DONE,9,3050,11,Tapu Bulu
+375,1,DONE,0,0,4,Celebi,-1,DONE,0,0,0,Meowth ex
+376,-1,DONE,2,480,4,Meowth ex,1,DONE,3,560,7,Celebi
+377,-1,DONE,2,690,5,Teal Mask Ogerpon ex,1,DONE,9,2410,15,Applin
+378,-1,DONE,0,0,0,Meowth ex,1,DONE,1,180,1,Teal Mask Ogerpon ex
+379,1,DONE,5,1530,5,Teal Mask Ogerpon ex,-1,DONE,0,240,2,Teal Mask Ogerpon ex
+380,-1,DONE,2,200,6,Applin,1,DONE,5,1890,5,Applin
+381,1,DONE,9,2750,11,Chikorita,-1,DONE,0,40,4,Chikorita
+382,1,DONE,5,680,7,Chikorita,-1,DONE,0,100,7,Celebi
+383,-1,DONE,2,940,6,Celebi,1,DONE,7,3130,9,Chikorita
+384,-1,DONE,0,150,3,Celebi,1,DONE,7,3030,19,Applin
+385,-1,DONE,0,0,0,Meowth ex,1,DONE,0,0,0,Teal Mask Ogerpon ex
+386,-1,DONE,2,900,6,Chikorita,1,DONE,3,900,3,Applin
+387,1,DONE,1,270,1,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Meowth ex
+388,-1,DONE,6,980,10,Teal Mask Ogerpon ex,1,DONE,9,1260,15,Meowth ex
+389,1,DONE,7,3570,11,Teal Mask Ogerpon ex,-1,DONE,0,40,2,Fezandipiti ex
+390,-1,DONE,0,60,4,Tapu Bulu,1,DONE,9,3750,9,Meowth ex
+391,-1,DONE,0,50,5,Meowth ex,1,DONE,7,2630,9,Applin
+392,-1,DONE,0,120,4,Celebi,1,DONE,11,1950,11,Teal Mask Ogerpon ex
+393,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,1,300,3,Applin
+394,1,DONE,3,870,7,Celebi,-1,DONE,0,200,2,Fezandipiti ex
+395,1,DONE,7,1750,11,Applin,-1,DONE,0,40,2,Applin
+396,1,DONE,1,210,1,Teal Mask Ogerpon ex,-1,DONE,0,120,1,Teal Mask Ogerpon ex
+397,-1,DONE,4,960,4,Teal Mask Ogerpon ex,1,DONE,7,2070,7,Chikorita
+398,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,7,1380,15,Meowth ex
+399,1,DONE,5,1100,11,Chikorita,-1,DONE,4,1170,4,Teal Mask Ogerpon ex
+400,-1,DONE,2,330,9,Celebi,1,DONE,9,3630,9,Teal Mask Ogerpon ex
+401,-1,DONE,4,1400,10,Chikorita,1,DONE,5,2370,5,Fezandipiti ex
+402,1,DONE,7,1570,9,Teal Mask Ogerpon ex,-1,DONE,8,1620,8,Meowth ex
+403,-1,DONE,0,0,0,Fezandipiti ex,1,DONE,3,990,3,Applin
+404,1,DONE,5,1650,5,Fezandipiti ex,-1,DONE,4,1480,8,Applin
+405,1,DONE,7,1920,11,Teal Mask Ogerpon ex,-1,DONE,2,960,2,Teal Mask Ogerpon ex
+406,-1,DONE,0,30,3,Teal Mask Ogerpon ex,1,DONE,5,1250,5,Teal Mask Ogerpon ex
+407,-1,DONE,4,1510,10,Chikorita,1,DONE,7,1920,7,Meowth ex
+408,-1,DONE,2,520,10,Celebi,1,DONE,9,3240,11,Teal Mask Ogerpon ex
+409,-1,DONE,2,440,6,Tapu Bulu,1,DONE,3,1610,9,Applin
+410,1,DONE,7,3150,13,Applin,-1,DONE,0,0,0,Chikorita
+411,1,DONE,7,1530,7,Teal Mask Ogerpon ex,-1,DONE,0,60,2,Celebi
+412,-1,DONE,2,660,8,Celebi,1,DONE,7,4050,7,Meowth ex
+413,-1,DONE,0,60,3,Applin,1,DONE,1,180,1,Applin
+414,-1,DONE,6,1520,12,Applin,1,DONE,9,2670,9,Applin
+415,-1,DONE,2,360,2,Teal Mask Ogerpon ex,1,DONE,7,3030,9,Celebi
+416,-1,DONE,2,720,4,Teal Mask Ogerpon ex,1,DONE,7,1750,11,Applin
+417,1,DONE,5,1470,7,Fezandipiti ex,-1,DONE,6,2070,9,Fezandipiti ex
+418,1,DONE,9,2740,11,Teal Mask Ogerpon ex,-1,DONE,6,3610,12,Applin
+419,-1,DONE,0,60,3,Applin,1,DONE,3,510,3,Teal Mask Ogerpon ex
+420,1,DONE,5,1740,5,Teal Mask Ogerpon ex,-1,DONE,0,0,0,Fezandipiti ex
+421,-1,DONE,0,0,0,Tapu Bulu,1,DONE,7,2010,7,Meowth ex
+422,1,DONE,7,2190,7,Teal Mask Ogerpon ex,-1,DONE,0,60,1,Applin
+423,1,DONE,5,2010,25,Celebi,-1,DONE,0,0,0,Teal Mask Ogerpon ex
+424,1,DONE,5,1510,7,Applin,-1,DONE,2,410,7,Applin
+425,1,DONE,7,2150,15,Applin,-1,DONE,4,1680,4,Teal Mask Ogerpon ex
+426,1,DONE,7,2800,11,Meowth ex,-1,DONE,2,1170,2,Meowth ex
+427,1,DONE,5,1530,5,Tapu Bulu,-1,DONE,2,660,4,Teal Mask Ogerpon ex
+428,1,DONE,5,1470,7,Tapu Bulu,-1,DONE,4,1200,8,Applin
+429,1,DONE,7,2440,9,Applin,-1,DONE,0,60,2,Chikorita
+430,-1,DONE,0,90,0,Tapu Bulu,1,DONE,3,660,3,Tapu Bulu
+431,-1,DONE,0,0,0,Meowth ex,1,DONE,5,1560,5,Fezandipiti ex
+432,-1,DONE,2,480,2,Teal Mask Ogerpon ex,1,DONE,5,1140,7,Applin
+433,-1,DONE,2,720,4,Celebi,1,DONE,9,3590,13,Applin
+434,1,DONE,5,1200,7,Teal Mask Ogerpon ex,-1,DONE,2,870,2,Chikorita
+435,1,DONE,7,1470,23,Applin,-1,DONE,4,1770,5,Meowth ex
+436,-1,DONE,0,0,0,Meowth ex,1,DONE,7,1700,21,Applin
+437,1,DONE,7,2070,7,Teal Mask Ogerpon ex,-1,DONE,0,60,2,Celebi
+438,1,DONE,1,240,1,Teal Mask Ogerpon ex,-1,DONE,0,140,1,Chikorita
+439,-1,DONE,0,500,7,Meowth ex,1,DONE,9,2310,17,Applin
+440,-1,DONE,0,100,4,Chikorita,1,DONE,5,1700,7,Celebi
+441,-1,DONE,2,960,2,Meowth ex,1,DONE,5,1620,5,Chikorita
+442,-1,DONE,2,670,19,Applin,1,DONE,7,2850,7,Teal Mask Ogerpon ex
+443,1,DONE,5,1670,11,Chikorita,-1,DONE,4,700,6,Fezandipiti ex
+444,1,DONE,1,180,1,Fezandipiti ex,-1,DONE,0,20,1,Applin
+445,-1,DONE,0,0,0,Meowth ex,1,DONE,7,1650,7,Chikorita
+446,-1,DONE,2,720,2,Chikorita,1,DONE,7,2190,7,Celebi
+447,1,DONE,7,2070,9,Celebi,-1,DONE,2,630,3,Meowth ex
+448,1,DONE,7,3020,17,Chikorita,-1,DONE,2,680,9,Meowth ex
+449,-1,DONE,4,520,6,Celebi,1,DONE,7,1930,7,Fezandipiti ex
+450,-1,DONE,0,0,0,Teal Mask Ogerpon ex,1,DONE,5,1530,5,Chikorita
+451,-1,DONE,0,20,3,Chikorita,1,DONE,3,660,3,Meowth ex
+452,-1,DONE,0,40,5,Applin,1,DONE,1,240,1,Applin
+453,-1,DONE,0,40,8,Tapu Bulu,1,DONE,7,2450,7,Fezandipiti ex
+454,1,DONE,7,2430,9,Teal Mask Ogerpon ex,-1,DONE,0,50,1,Celebi
+455,1,DONE,9,3570,9,Teal Mask Ogerpon ex,-1,DONE,0,240,6,Celebi
+456,-1,DONE,6,1180,8,Teal Mask Ogerpon ex,1,DONE,7,2430,7,Fezandipiti ex
+457,-1,DONE,4,1320,12,Applin,1,DONE,7,2270,9,Meowth ex
+458,1,DONE,5,1650,5,Teal Mask Ogerpon ex,-1,DONE,0,360,2,Fezandipiti ex
+459,-1,DONE,6,2250,13,Chikorita,1,DONE,7,2070,7,Applin
+460,-1,DONE,4,2160,12,Teal Mask Ogerpon ex,1,DONE,7,2090,7,Tapu Bulu
+461,-1,DONE,4,1390,6,Applin,1,DONE,7,2800,7,Teal Mask Ogerpon ex
+462,1,DONE,5,1630,7,Applin,-1,DONE,2,300,2,Teal Mask Ogerpon ex
+463,-1,DONE,4,720,6,Teal Mask Ogerpon ex,1,DONE,7,1650,7,Teal Mask Ogerpon ex
+464,-1,DONE,0,0,0,Meowth ex,1,DONE,3,450,3,Teal Mask Ogerpon ex
+465,1,DONE,7,1950,25,Chikorita,-1,DONE,0,0,0,Tapu Bulu
+466,-1,DONE,2,440,2,Tapu Bulu,1,DONE,7,2970,13,Applin
+467,-1,DONE,6,1680,8,Meowth ex,1,DONE,5,1890,5,Meowth ex
+468,1,DONE,5,1530,5,Teal Mask Ogerpon ex,-1,DONE,2,740,5,Applin
+469,1,DONE,7,1740,13,Meowth ex,-1,DONE,4,1500,4,Tapu Bulu
+470,-1,DONE,2,890,8,Meowth ex,1,DONE,7,2080,11,Applin
+471,-1,DONE,0,0,1,Meowth ex,1,DONE,7,1840,7,Meowth ex
+472,1,DONE,5,850,13,Applin,-1,DONE,0,0,0,Applin
+473,1,DONE,5,1170,5,Teal Mask Ogerpon ex,-1,DONE,0,60,2,Chikorita
+474,1,DONE,7,2670,11,Celebi,-1,DONE,6,1740,10,Fezandipiti ex
+475,-1,DONE,4,540,4,Teal Mask Ogerpon ex,1,DONE,3,1200,5,Teal Mask Ogerpon ex
+476,-1,DONE,0,0,2,Celebi,1,DONE,7,1710,9,Applin
+477,1,DONE,7,2310,9,Meowth ex,-1,DONE,2,1080,6,Meowth ex
+478,1,DONE,3,660,3,Tapu Bulu,-1,DONE,0,130,2,Applin
+479,1,DONE,3,810,3,Teal Mask Ogerpon ex,-1,DONE,0,40,2,Applin
+480,1,DONE,5,2100,7,Meowth ex,-1,DONE,0,0,0,Teal Mask Ogerpon ex
+481,-1,DONE,0,0,2,Teal Mask Ogerpon ex,1,DONE,7,2750,9,Fezandipiti ex
+482,1,DONE,7,2250,7,Applin,-1,DONE,2,960,5,Applin
+483,1,DONE,5,3510,11,Celebi,-1,DONE,2,720,4,Applin
+484,-1,DONE,4,1480,6,Applin,1,DONE,7,2670,7,Applin
+485,1,DONE,5,2190,21,Teal Mask Ogerpon ex,-1,DONE,2,720,4,Celebi
+486,1,DONE,7,3630,13,Celebi,-1,DONE,4,1380,10,Celebi
+487,1,DONE,1,330,5,Celebi,-1,DONE,0,90,3,Celebi
+488,-1,DONE,0,240,6,Chikorita,1,DONE,7,2470,7,Teal Mask Ogerpon ex
+489,1,DONE,5,2310,9,Chikorita,-1,DONE,4,1060,10,Applin
+490,1,DONE,7,1470,9,Meowth ex,-1,DONE,2,940,6,Applin
+491,1,DONE,7,2560,13,Chikorita,-1,DONE,2,620,11,Applin
+492,-1,DONE,0,0,0,Meowth ex,1,DONE,0,0,0,Meowth ex
+493,1,DONE,7,1620,11,Teal Mask Ogerpon ex,-1,DONE,4,1380,6,Meowth ex
+494,-1,DONE,0,0,1,Chikorita,1,DONE,1,300,1,Teal Mask Ogerpon ex
+495,1,DONE,7,2760,15,Celebi,-1,DONE,0,0,0,Tapu Bulu
+496,-1,DONE,2,960,4,Teal Mask Ogerpon ex,1,DONE,7,3750,7,Teal Mask Ogerpon ex
+497,-1,DONE,0,60,3,Applin,1,DONE,1,330,1,Teal Mask Ogerpon ex
+498,-1,DONE,0,120,6,Chikorita,1,DONE,9,2710,11,Applin
+499,-1,DONE,4,1120,10,Chikorita,1,DONE,7,1590,9,Applin
+500,-1,DONE,0,0,0,Tapu Bulu,1,DONE,9,2190,9,Teal Mask Ogerpon ex
