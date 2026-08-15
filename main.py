@@ -48,5 +48,4 @@ def agent(obs_dict: dict) -> list[int]:
 #OFFENCE DEFENCE TODO when ogerpon attack can deal 390 damage, dont use ability
 #SETUP TODO change prime catcher score
 #OFFENCE TODO if do switch and active cant switch use prime catcher
-#SETUP OFFENCE DEFENCE TODO CHANGE BRIAR
 #SETUP TODO used ultra ball before attaching energy to ogerpon (missed ko breakpoint by discarding energy before attaching)
