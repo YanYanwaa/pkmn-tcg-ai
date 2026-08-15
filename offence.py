@@ -1314,6 +1314,8 @@ def offence_agent(obs_dict: dict) -> list[int]:
                             score = 3000
                         elif my_active is not None and my_active.id == Hydrapple_Ex:
                             score = 3100
+                            if highest_energy_ogerpon(card):
+                                score += 50
                         elif all_ogerpon_can_attack():
                             if highest_energy_ogerpon(card):
                                 score = 3200
