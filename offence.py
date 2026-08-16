@@ -266,7 +266,11 @@ def offence_agent(obs_dict: dict) -> list[int]:
         if can_attack_now(my_active):
             active_damage = damage_calc(active_id, my_active, op_active)
             if my_active.id == Ogerpon or my_active.id == Hydrapple_Ex:
-                active_damage += 30
+                if is_unused_ability():
+                    if field_counts[Meganium] >= 1:
+                        active_damage += 60
+                    else:
+                        active_damage += 30
         else:
             active_damage = 0
 
@@ -274,9 +278,22 @@ def offence_agent(obs_dict: dict) -> list[int]:
             if can_attack_now(pokemon):
                 bench_damage = damage_calc(pokemon.id, pokemon, op_active)
                 if pokemon.id == Ogerpon or pokemon.id == Hydrapple_Ex:
-                    bench_damage += 30
-                if bench_damage > active_damage:
-                    return True
+                    if is_unused_ability():
+                        if field_counts[Meganium] >= 1:
+                            bench_damage += 60
+                        else:
+                            bench_damage += 30
+                if bench_damage >= active_damage:
+                    if pokemon.id == Hydrapple_Ex:
+                        if field_counts[Meganium] >= 1:
+                            retreated_damage = bench_damage - (card_table[active_id].retreatCost * 60)
+                        else:
+                            retreated_damage = bench_damage - (card_table[active_id].retreatCost * 30)
+                        if retreated_damage > active_damage or (retreated_damage >= active_damage and pokemon.hp > my_active.hp):
+                            return True
+                    else:
+                        if bench_damage > active_damage or (bench_damage == active_damage and pokemon.hp > my_active.hp):
+                            return True
         return False
 
     def all_ogerpon_can_attack() -> bool:
@@ -346,7 +363,7 @@ def offence_agent(obs_dict: dict) -> list[int]:
     def do_switch():
         
         if my_active is not None and can_attack_now(my_active) and op_active is not None and (damage_calc(my_active.id, my_active, op_active) >= op_active.hp):
-            if my_active.id == Celebi and better_bench_attacker(active_id, my_active, op_active):
+            if better_bench_attacker(active_id, my_active, op_active):
                 return True
             return False
         elif my_active is not None and can_attack_now(my_active) and op_active is not None and better_bench_attacker(my_active.id, my_active,op_active):

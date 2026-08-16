@@ -11,6 +11,8 @@ from setup_agent import agent as setup_agent_fn, setup_progress, card_table
 from setup_agent import agent as setup_agent_weak
 from setup_agent import EX_WALL_IDS, EX_WALL_EARLY_WARNING_IDS
 from original import agent as boss_agent
+from defence import defence_agent
+from offence import offence_agent
 NUM_GAMES = 10000
 OUTPUT_DIR = "results"
 CSV_PATH = os.path.join(OUTPUT_DIR, "batch_results.csv")

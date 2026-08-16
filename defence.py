@@ -264,7 +264,11 @@ def defence_agent(obs_dict: dict) -> list[int]:
         if can_attack_now(my_active):
             active_damage = damage_calc(active_id, my_active, op_active)
             if my_active.id == Ogerpon or my_active.id == Hydrapple_Ex:
-                active_damage += 30
+                if is_unused_ability():
+                    if field_counts[Meganium] >= 1:
+                        active_damage += 60
+                    else:
+                        active_damage += 30
         else:
             active_damage = 0
 
@@ -272,9 +276,22 @@ def defence_agent(obs_dict: dict) -> list[int]:
             if can_attack_now(pokemon):
                 bench_damage = damage_calc(pokemon.id, pokemon, op_active)
                 if pokemon.id == Ogerpon or pokemon.id == Hydrapple_Ex:
-                    bench_damage += 30
-                if bench_damage > active_damage:
-                    return True
+                    if is_unused_ability():
+                        if field_counts[Meganium] >= 1:
+                            bench_damage += 60
+                        else:
+                            bench_damage += 30
+                if bench_damage >= active_damage:
+                    if pokemon.id == Hydrapple_Ex:
+                        if field_counts[Meganium] >= 1:
+                            retreated_damage = bench_damage - (card_table[active_id].retreatCost * 60)
+                        else:
+                            retreated_damage = bench_damage - (card_table[active_id].retreatCost * 30)
+                        if retreated_damage > active_damage or (retreated_damage >= active_damage and pokemon.hp > my_active.hp):
+                            return True
+                    else:
+                        if bench_damage > active_damage or (bench_damage == active_damage and pokemon.hp > my_active.hp):
+                            return True
         return False
 
     def all_ogerpon_can_attack() -> bool:
@@ -345,7 +362,12 @@ def defence_agent(obs_dict: dict) -> list[int]:
         # TODO ADD THREAT DETECTION HERE FOR MORE DYNAMIC SWITCHING
         bench_ex = 0
         attacker = 0
+
+        if my_active.hp <= 60 and prize_count(my_active, True) >= 2:
+            return True
         if op_active is not None and my_active is not None and can_attack_now(my_active) and damage_calc(my_active.id, my_active, op_active) >= op_active.hp:
+            if better_bench_attacker(my_active.id, my_active, op_active):
+                return True
             return False
         if my_active is not None and not can_attack_now(my_active) and better_bench_attacker(my_active.id, my_active, op_active):
             for p in my_state.bench:
