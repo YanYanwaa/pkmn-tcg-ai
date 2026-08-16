@@ -34,14 +34,14 @@ def agent(obs_dict: dict) -> list[int]:
     board_threat = _threat_detector.score_board(op_state)
     high_threat = board_threat["active_threat"] >= HIGH_THREAT_TRIGGER
 
-    if state.turn <= 5:
-        print("Using Setup")
+    if state.turn <= 6:
+        #print("Using Setup")
         return setup_agent(obs_dict)
     elif high_threat:
-        print("Using Defence")
+        #print("Using Defence")
         return defence_agent(obs_dict)
     else:
-        print("Using Offence")
+        #print("Using Offence")
         return offence_agent(obs_dict)
 
 

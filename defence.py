@@ -876,7 +876,7 @@ def defence_agent(obs_dict: dict) -> list[int]:
                     score = -1
             elif id == Energy_Retrieval:
                 score = 2000
-                if hand_counts[Basic_Grass_Energy] < 1 or (hand_counts[Basic_Grass_Energy] < (field_counts[Ogerpon] + field_counts[Hydrapple_Ex]) and is_unused_ability):
+                if hand_counts[Basic_Grass_Energy] < 1 or (hand_counts[Basic_Grass_Energy] < (field_counts[Ogerpon] + field_counts[Hydrapple_Ex]) and is_unused_ability()):
                     if discard_counts[Basic_Grass_Energy] < 2:
                         score = - 1
                     else:
@@ -1142,7 +1142,7 @@ def defence_agent(obs_dict: dict) -> list[int]:
                             hand_counts[card.id] += 1
                     elif context == SelectContext.DISCARD:
                         hand_counts[card.id] -= 1
-                        if card_table[card.id].cardId == CardType.SUPPORTER:
+                        if card_table[card.id].cardType == CardType.SUPPORTER:
                             support_count -= 1
                         score = -hand_score(card.id, False)
                     elif context == SelectContext.DAMAGE_COUNTER or context == SelectContext.DAMAGE_COUNTER_ANY:
